@@ -1,0 +1,8 @@
+input SignInUser {
+  login: String!
+  password: String!
+}
+
+type Mutation {
+  SignIn(input: SignInUser!): Token!
+}

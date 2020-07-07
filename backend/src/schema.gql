@@ -1,0 +1,64 @@
+input CreatePinInput {
+  title: String!
+  description: String!
+  lat: String!
+  lon: String!
+  image: String!
+}
+
+type Mutation {
+  CreatePin(input: CreatePinInput!): Pin
+  SignIn(input: SignInUser!): Token!
+  SignUp(input: SignUpUser!): Token!
+}
+
+type Query {
+  GetPins: [Pin]!
+  CurrentUser: User
+}
+
+type Comment {
+  text: String!
+  createdAt: String
+  author: User
+  pin: Pin
+}
+
+type Pin {
+  id: ID
+  title: String!
+  createdAt: String!
+  description: String!
+  image: String
+  lat: String!
+  lon: String!
+  author: User
+  comments: [Comment]
+}
+
+type User {
+  id: ID!
+  login: String!
+  email: String!
+  password: String!
+  image: String
+  pins: [Pin]
+  createdAt: String
+  updatedAt: String
+}
+
+type Token {
+  token: String
+}
+
+input SignInUser {
+  login: String!
+  password: String!
+}
+
+input SignUpUser {
+  login: String!
+  email: String!
+  password: String!
+  image: String
+}

@@ -1,0 +1,11 @@
+input CreatePinInput {
+  title: String!
+  description: String!
+  lat: String!
+  lon: String!
+  image: String!
+}
+
+type Mutation {
+  CreatePin(input: CreatePinInput!): Pin
+}

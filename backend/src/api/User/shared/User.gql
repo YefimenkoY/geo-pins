@@ -1,0 +1,14 @@
+type User {
+  id: ID!
+  login: String!
+  email: String!
+  password: String!
+  image: String
+  pins: [Pin]
+  createdAt: String
+  updatedAt: String
+}
+
+type Token {
+  token: String
+}

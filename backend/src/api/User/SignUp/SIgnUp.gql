@@ -1,0 +1,10 @@
+input SignUpUser {
+  login: String!
+  email: String!
+  password: String!
+  image: String
+}
+
+type Mutation {
+  SignUp(input: SignUpUser!): Token!
+}
