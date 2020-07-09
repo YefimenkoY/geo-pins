@@ -7,11 +7,11 @@ import useMapContext from "./context/map";
 import client from "./client";
 import theme from "./constants/theme";
 
-interface IProps {
+interface Props {
   children: any;
 }
 
-const ProvidersWrapper: React.FC<IProps> = ({ children }) => (
+const ProvidersWrapper: React.FC<Props> = ({ children }) => (
   <ApolloProvider client={client}>
     <ThemeProvider theme={theme}>
       <useCurrentUserContext.Provider>

@@ -1,33 +1,33 @@
-import React, { JSXElementConstructor } from "react";
-import { Route, Redirect, RouteProps } from "react-router-dom";
+import React, { JSXElementConstructor } from "react"
+import { Route, Redirect, RouteProps } from "react-router-dom"
 
-import { routes } from "../../constants/routes";
+import { routes } from "../../constants/routes"
 
-interface IProps<P> extends RouteProps {
-  component: JSXElementConstructor<P>;
-  isLoggedIn: boolean;
-  refetch: any;
+interface Props<P> extends RouteProps {
+	component: JSXElementConstructor<P>;
+	isLoggedIn: boolean;
+	refetch: any;
 }
 
-const ProtectedRoute: React.FC<IProps<any>> = ({
-  component: Component,
-  isLoggedIn,
-  ...rest
+const ProtectedRoute: React.FC<Props<any>> = ({
+	component: Component,
+	isLoggedIn,
+	...rest
 }) => (
-  <Route
-    {...rest}
-    render={props =>
-      isLoggedIn ? (
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{
-            pathname: routes.LOG_IN
-          }}
-        />
-      )
-    }
-  />
-);
+	<Route
+		{...rest}
+		render={props =>
+			isLoggedIn ? (
+				<Component {...props} />
+			) : (
+				<Redirect
+					to={{
+						pathname: routes.LOG_IN,
+					}}
+				/>
+			)
+		}
+	/>
+)
 
-export default ProtectedRoute;
+export default ProtectedRoute

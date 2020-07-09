@@ -4,6 +4,6 @@ services:
   - docker
 
 before_install:
-  - docker-compose build
+  - docker-compose build frontend
 
-script: docker run geo-pins_frontend yarn test --"watchAll=false"
+script: docker run geo-pins_frontend yarn lint
