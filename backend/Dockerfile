@@ -2,10 +2,6 @@ FROM node:alpine
 
 WORKDIR /usr/app
 
-COPY package.json .
-
-RUN yarn
-
 COPY . .
 
-CMD [ "yarn", "dev" ]
+CMD [ "yarn", "build" ]

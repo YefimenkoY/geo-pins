@@ -1,0 +1,9 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker-compose build
+
+script: docker run geo-pins_frontend yarn test --"watchAll=false"
