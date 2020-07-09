@@ -1,5 +1,10 @@
-FROM node:alpine
+FROM node:alpine as builder
 
 WORKDIR /usr/app
 
-CMD [ "yarn", "build" ]
+RUN yarn
+COPY . .
+RUN yarn build
+
+FROM nginx
+COPY --from=builder /app/builder /usr/share/nginx/html
