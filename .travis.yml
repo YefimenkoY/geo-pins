@@ -1,9 +1,22 @@
 sudo: required
-
 services:
   - docker
 
-before_install:
-  - docker-compose build frontend
+# before_install:
+#   - docker-compose build frontend
 
-script: docker run geo-pins_frontend yarn lint
+script:
+  - echo "test"
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "geo-pins"
+  env: "GeoPins-env"
+  bucket_name: "elasticbeanstalk-us-east-2-064693154869"
+  bucket_path: "geo-pins"
+  on:
+    branch: master
+  edge: true
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
