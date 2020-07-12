@@ -2,24 +2,26 @@ sudo: required
 services:
   - docker
 
-before_install:
+script:
+  - echo "test"
+
+aftet_success:
   - docker build -t yurr92/frontend ./frontend
   - docker build -t yurr92/backend ./backend
+  - docker build -t yurr92/nginx ./nginx
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push yurr92/frontend
   - docker push yurr92/backend
-
-script:
-  - echo "test"
-# deploy:
-#   provider: elasticbeanstalk
-#   region: "us-east-2"
-#   app: "geo-pins"
-#   env: "GeoPins-env-1"
-#   bucket_name: "elasticbeanstalk-us-east-2-064693154869"
-#   bucket_path: "geo-pins"
-#   on:
-#     branch: master
-#   edge: true
-#   access_key_id: $AWS_ACCESS_KEY
-#   secret_access_key: $AWS_SECRET_KEY
+  - docker push yurr92/nginx
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "geoPins"
+  env: "Geopins-env"
+  bucket_name: "elasticbeanstalk-us-east-2-064693154869"
+  bucket_path: "geoPins"
+  on:
+    branch: master
+  edge: true
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
