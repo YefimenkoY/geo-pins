@@ -1,6 +1,11 @@
 version: "3"
 
 services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: test
   backend:
     build:
       context: ./backend
@@ -10,11 +15,12 @@ services:
     volumes:
       - /usr/app/node_modules
       - ./backend/src:/usr/app/src
-  db:
-    image: postgres
-    restart: always
     environment:
-      POSTGRES_PASSWORD: test
+      - PG_HOST=db
+      - PG_PORT=5432
+      - PG_USERNAME=postgres
+      - PG_PASSWORD=test
+      - SECRET=sdfsdfwer23rwefsf
   frontend:
     build:
       context: ./frontend
@@ -24,3 +30,5 @@ services:
     volumes:
       - /usr/app/node_modules
       - ./frontend/src:/usr/app/src
+    environment:
+      - REACT_APP_MAP_BOX_TOKEN=pk.eyJ1IjoieXJyOTIiLCJhIjoiY2swamV2eTRrMDk0bTNucG5xdGE3YnFmYiJ9.wVtCsbkHfBmgj1mhwu8_1g

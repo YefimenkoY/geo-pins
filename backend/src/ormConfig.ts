@@ -6,10 +6,10 @@ const connectionOptions: ConnectionOptions = {
 	synchronize: true,
 	logging: false,
 	entities: ["entities/**/*.*"],
-	host: "db",
+	host: process.env.PG_HOST,
 	port: 5432,
-	username: "postgres",
-	password: "test",
+	username: process.env.PG_USERNAME,
+	password: process.env.PG_PASSWORD,
 }
 
 export default connectionOptions
