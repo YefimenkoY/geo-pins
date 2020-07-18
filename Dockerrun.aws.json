@@ -9,7 +9,7 @@
 			"memory": 128
 		},
 		{
-			"name": "backend",
+			"name": "api",
 			"image": "yurr92/backend",
 			"hostname": "api",
 			"essential": false,

@@ -1,12 +1,12 @@
 import { Resolvers } from "resolvers"
-import { SignInMutationArgs } from "../../../types/graph"
+import { MutationSignInArgs } from "../../../types/graph"
 import { Token } from "../../../types/graph"
 import User from "../../../entities/User"
 import { createToken } from "../../../utils"
 
 const resolvers: Resolvers = {
 	Mutation: {
-		SignIn: async (_, args: SignInMutationArgs): Promise<Token> => {
+		SignIn: async (_, args: MutationSignInArgs): Promise<Token> => {
 			const { login, password } = args.input
 
 			try {
