@@ -52,7 +52,7 @@ const Map = () => {
 			mapStyle="mapbox://styles/mapbox/dark-v9"
 			onClick={handleMapClick}
 			{...mapPosition}
-			mapboxApiAccessToken={process.env.REACT_APP_MAP_BOX_TOKEN || ""}
+			mapboxApiAccessToken="pk.eyJ1IjoieXJyOTIiLCJhIjoiY2swamV2eTRrMDk0bTNucG5xdGE3YnFmYiJ9.wVtCsbkHfBmgj1mhwu8_1g"
 			onViewportChange={({ longitude, latitude, zoom }) =>
 				setMapPosition({ longitude, latitude, zoom })
 			}

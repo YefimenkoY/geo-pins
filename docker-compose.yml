@@ -11,16 +11,16 @@ services:
       context: ./backend
       dockerfile: Dockerfile.dev
     ports:
-      - "4000:4000"
+      - "5000:5000"
     volumes:
       - /usr/app/node_modules
       - ./backend/src:/usr/app/src
     environment:
-      - PG_HOST=db
-      - PG_PORT=5432
-      - PG_USERNAME=postgres
-      - PG_PASSWORD=test
-      - SECRET=sdfsdfwer23rwefsf
+      - RDS_HOSTNAME=db
+      - RDS_PORT=5432
+      - RDS_USERNAME=postgres
+      - RDS_PASSWORD=test
+      - SECRET=sdfsdf3ewfs
   frontend:
     build:
       context: ./frontend
