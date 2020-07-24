@@ -5,19 +5,19 @@
 			"name": "frontend",
 			"image": "yurr92/frontend",
 			"hostname": "frontend",
-			"essential": false,
+			"essential": true,
 			"memory": 128
 		},
 		{
-			"name": "api",
+			"name": "backend",
 			"image": "yurr92/backend",
-			"hostname": "api",
-			"essential": false,
+			"hostname": "backend",
+			"essential": true,
 			"memory": 128
 		},
 		{
 			"name": "nginx",
-			"image": "yurrr92/nginx",
+			"image": "yurr92/nginx",
 			"hostname": "nginx",
 			"essential": true,
 			"memory": 128,

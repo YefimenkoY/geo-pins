@@ -7,7 +7,7 @@ export const createToken = async (
   user: User,
   expiresIn: string = "5h",
 ): Promise<string> => {
-  return await jwt.sign({ ...user }, process.env.SECRET, {
+  return await jwt.sign({ ...user }, "sdfsdfer3efsdfwefsdff3423sdf", {
     expiresIn,
   })
 }
@@ -17,7 +17,7 @@ export const getCurrentUser = async (req: Request): Promise<string | {}> => {
 
   if (token) {
     try {
-      return await jwt.verify(token, process.env.SECRET)
+      return await jwt.verify(token, "sdfsdfer3efsdfwefsdff3423sdf")
     } catch (e) {
       throw new Error(e.message)
     }
