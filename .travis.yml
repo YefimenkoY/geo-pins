@@ -3,27 +3,37 @@ services:
   - docker
 sudo: true
 
-script:
-  - echo "test"
+stages:
+  - test
+  - deploy-images
+  - deploy
 
-before_deploy:
-  - docker build -t yurr92/frontend ./frontend
-  - docker build -t yurr92/backend ./backend
-  - docker build -t yurr92/nginx ./nginx
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push yurr92/frontend
-  - docker push yurr92/backend
-  - docker push yurr92/nginx
-
-deploy:
-  provider: elasticbeanstalk
-  region: "us-east-2"
-  app: "geoPins"
-  env: "Geopins-env"
-  bucket_name: "elasticbeanstalk-us-east-2-064693154869"
-  bucket_path: "geoPins"
-  on:
-    branch: master
-  edge: true
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+jobs:
+  include:
+    - stage: test
+        script: "Running unit tests (1)"
+    - stage: deploy-images
+      if: branch = master
+      script: 
+        - docker build -t yurr92/frontend ./frontend
+        - docker build -t yurr92/backend ./backend
+        - docker build -t yurr92/nginx ./nginx
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+        - docker push yurr92/frontend
+        - docker push yurr92/backend
+        - docker push yurr92/nginx
+    - stage: deploy
+      if: branch = master
+      script: skip
+      deploy:
+        provider: elasticbeanstalk
+        region: "us-east-2"
+        app: "geoPins"
+        env: "Geopins-env"
+        bucket_name: "elasticbeanstalk-us-east-2-064693154869"
+        bucket_path: "geoPins"
+        on:
+          branch: master
+        edge: true
+        access_key_id: $AWS_ACCESS_KEY
+        secret_access_key: $AWS_SECRET_KEY
