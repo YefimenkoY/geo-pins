@@ -1,0 +1,7 @@
+input DeletePinInput {
+	pinId: String!
+}
+
+type Mutation {
+	DeletePin(input: DeletePinInput!): [Pin]
+}

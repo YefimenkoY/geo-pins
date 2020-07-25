@@ -15,7 +15,6 @@ const resolvers: Resolvers = {
 					throw Error(`User with login ${args.input.login} is not found`)
 
 				const isValid = user.comparePasswords(password)
-				console.log(isValid, password)
 				if (!isValid) throw Error("Wrong password")
 
 				return {

@@ -27,9 +27,14 @@ export type CreatePinInput = {
   image: Scalars['String'];
 };
 
+export type DeletePinInput = {
+  pinId: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   CreatePin?: Maybe<Pin>;
+  DeletePin?: Maybe<Array<Maybe<Pin>>>;
   SignIn: Token;
   SignUp: Token;
 };
@@ -37,6 +42,11 @@ export type Mutation = {
 
 export type MutationCreatePinArgs = {
   input: CreatePinInput;
+};
+
+
+export type MutationDeletePinArgs = {
+  input: DeletePinInput;
 };
 
 
@@ -183,6 +193,7 @@ export type ResolversTypes = {
   Comment: ResolverTypeWrapper<Comment>;
   Mutation: ResolverTypeWrapper<{}>;
   CreatePinInput: CreatePinInput;
+  DeletePinInput: DeletePinInput;
   SignInUser: SignInUser;
   Token: ResolverTypeWrapper<Token>;
   SignUpUser: SignUpUser;
@@ -199,6 +210,7 @@ export type ResolversParentTypes = {
   Comment: Comment;
   Mutation: {};
   CreatePinInput: CreatePinInput;
+  DeletePinInput: DeletePinInput;
   SignInUser: SignInUser;
   Token: Token;
   SignUpUser: SignUpUser;
@@ -215,6 +227,7 @@ export type CommentResolvers<ContextType = any, ParentType extends ResolversPare
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   CreatePin?: Resolver<Maybe<ResolversTypes['Pin']>, ParentType, ContextType, RequireFields<MutationCreatePinArgs, 'input'>>;
+  DeletePin?: Resolver<Maybe<Array<Maybe<ResolversTypes['Pin']>>>, ParentType, ContextType, RequireFields<MutationDeletePinArgs, 'input'>>;
   SignIn?: Resolver<ResolversTypes['Token'], ParentType, ContextType, RequireFields<MutationSignInArgs, 'input'>>;
   SignUp?: Resolver<ResolversTypes['Token'], ParentType, ContextType, RequireFields<MutationSignUpArgs, 'input'>>;
 };
