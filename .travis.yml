@@ -4,14 +4,17 @@ services:
 
 stages:
   - test
-  - deploy-images
+  - name: deploy-images
+    if: branch = master
   - name: deploy
     if: branch = master
 
 jobs:
   include:
     - stage: test
-      script: echo "test..."
+      script:
+        - docker build -t yurr92/frontend -f ./frontend/Dockerfile.dev ./frontend
+        - docker run yurr92/frontend yarn test -- --coverage
     - stage: deploy-images
       script:
         - docker build -t yurr92/frontend ./frontend
