@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { ApolloClient, NormalizedCacheObject } from "apollo-boost"
+import { ApolloClient } from "@apollo/client"
 import { Menu, Sidebar } from "semantic-ui-react"
 
 import Header from "./Header"
@@ -17,7 +17,7 @@ const Box = styled.div`
 `
 
 interface Props {
-	client: ApolloClient<NormalizedCacheObject>
+	client: ApolloClient<any>
 	children: any
 }
 
