@@ -1,14 +1,13 @@
-import { ApolloClient } from "apollo-client"
+import { ApolloClient, InMemoryCache } from "@apollo/client"
 import { createHttpLink } from "apollo-link-http"
 import { setContext } from "apollo-link-context"
-import { InMemoryCache } from "apollo-cache-inmemory"
 import { ApolloLink } from "apollo-link"
 import { Context } from "@apollo/react-common"
 
 const httpLink: ApolloLink = createHttpLink({
 	uri:
 		process.env.NODE_ENV === "development"
-			? "http://localhost:5000/graphql"
+			? "http://localhost:5000/graphql" 
 			: "/graphql",
 })
 

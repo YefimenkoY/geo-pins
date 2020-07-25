@@ -1,16 +1,6 @@
-export type Theme = {
-	header: {
-		height: string
-	}
-	colors: {
-		purple: string
-	}
-	sizes: {
-		sm: number
-	}
-}
+import { DefaultTheme } from "styled-components"
 
-const theme: Theme = {
+const theme: DefaultTheme = {
 	header: {
 		height: "100px",
 	},

@@ -11,13 +11,11 @@ import { RouteComponentProps } from "react-router"
 import useMapContext from "../context/map"
 import { routes } from "../constants/routes"
 import useCurrentUserContext from "../context/currentUser"
-import { Theme } from "../constants/theme"
 
 const Box: StyledComponent<any, any> = styled(Segment)`
 	&& {
-		height: ${({ theme }: { theme: Theme }) => theme.header.height};
-		background-color: ${({ theme }: { theme: Theme }) =>
-			theme.colors.purple} !important;
+		height: ${({ theme }) => theme.header.height};
+		background-color: ${({ theme }) => theme.colors.purple} !important;
 		width: 100%;
 		border-radius: 0 !important;
 		color: inherit !important;
@@ -25,8 +23,7 @@ const Box: StyledComponent<any, any> = styled(Segment)`
 		padding: 0 50px 0 0 !important;
 		position: relative;
 
-		@media screen and (max-width: ${({ theme }: { theme: Theme }) =>
-				theme.sizes.sm}px) {
+		@media screen and (max-width: ${({ theme }) => theme.sizes.sm}px) {
 			height: 70px;
 		}
 	}
@@ -48,8 +45,7 @@ const LogoLink: StyledComponent<any, any> = styled(Link)`
 	h1 {
 		margin: 0;
 	}
-	@media screen and (max-width: ${({ theme }: { theme: Theme }) =>
-			theme.sizes.sm}px) {
+	@media screen and (max-width: ${({ theme }) => theme.sizes.sm}px) {
 		h1 {
 			font-size: 11px;
 		}
