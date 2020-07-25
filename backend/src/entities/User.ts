@@ -45,8 +45,6 @@ export default class User extends BaseEntity {
 	comments: Comment[]
 
 	public comparePasswords(password: string): boolean {
-		console.log(this.password)
-
 		return bcrypt.compareSync(password, this.password)
 	}
 

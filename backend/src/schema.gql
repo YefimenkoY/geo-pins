@@ -8,8 +8,13 @@ input CreatePinInput {
 
 type Mutation {
   CreatePin(input: CreatePinInput!): Pin
+  DeletePin(input: DeletePinInput!): [Pin]
   SignIn(input: SignInUser!): Token!
   SignUp(input: SignUpUser!): Token!
+}
+
+input DeletePinInput {
+  pinId: String!
 }
 
 type Query {
