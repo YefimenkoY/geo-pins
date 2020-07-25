@@ -1,20 +1,19 @@
 sudo: required
 services:
   - docker
-sudo: true
 
 stages:
   - test
   - deploy-images
-  - deploy
+  - name: deploy
+    if: branch = master
 
 jobs:
   include:
     - stage: test
-        script: "Running unit tests (1)"
+      script: echo "test..."
     - stage: deploy-images
-      if: branch = master
-      script: 
+      script:
         - docker build -t yurr92/frontend ./frontend
         - docker build -t yurr92/backend ./backend
         - docker build -t yurr92/nginx ./nginx
@@ -23,7 +22,6 @@ jobs:
         - docker push yurr92/backend
         - docker push yurr92/nginx
     - stage: deploy
-      if: branch = master
       script: skip
       deploy:
         provider: elasticbeanstalk
