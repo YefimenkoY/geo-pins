@@ -62,7 +62,7 @@ const SidebarContent = () => {
 	}
 
 	return (
-		<Segment padded="very" style={{ width: "100%" }} inverted color="grey">
+		<Segment inverted color="grey">
 			<Header as="h3" textAlign="center">
 				Create your pin!
 				<Icon color="red" name="map pin" />

@@ -17,8 +17,8 @@ const Box = styled.div`
 `
 
 interface Props {
-	client: ApolloClient<NormalizedCacheObject>;
-	children: any;
+	client: ApolloClient<NormalizedCacheObject>
+	children: any
 }
 
 const Layout: React.FC<Props> = ({ children, client }) => {
@@ -40,7 +40,6 @@ const Layout: React.FC<Props> = ({ children, client }) => {
 					icon="labeled"
 					vertical
 					visible={sidebar}
-					width="wide"
 				>
 					<SidebarContent />
 				</Sidebar>

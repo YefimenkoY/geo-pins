@@ -11,35 +11,48 @@ import { RouteComponentProps } from "react-router"
 import useMapContext from "../context/map"
 import { routes } from "../constants/routes"
 import useCurrentUserContext from "../context/currentUser"
+import { Theme } from "../constants/theme"
 
 const Box: StyledComponent<any, any> = styled(Segment)`
 	&& {
-		height: ${({ theme: { header } }) => header.height};
-		background: ${({ theme: { colors } }) => colors.purple} !important;
+		height: ${({ theme }: { theme: Theme }) => theme.header.height};
+		background-color: ${({ theme }: { theme: Theme }) =>
+			theme.colors.purple} !important;
 		width: 100%;
 		border-radius: 0 !important;
 		color: inherit !important;
 		margin: 0 !important;
+		padding: 0 50px 0 0 !important;
 		position: relative;
+
+		@media screen and (max-width: ${({ theme }: { theme: Theme }) =>
+				theme.sizes.sm}px) {
+			height: 70px;
+		}
 	}
 `
 
 const Container = styled(_Container)`
 	&& {
-		display: grid !important;
+		display: flex !important;
 		align-items: center;
 		justify-content: space-between;
 		height: 100%;
-		grid-template-columns: 300px 300px;
 	}
 `
 
-const LogoLink = styled(Link)`
+const LogoLink: StyledComponent<any, any> = styled(Link)`
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
 	h1 {
 		margin: 0;
+	}
+	@media screen and (max-width: ${({ theme }: { theme: Theme }) =>
+			theme.sizes.sm}px) {
+		h1 {
+			font-size: 11px;
+		}
 	}
 `
 
@@ -49,24 +62,25 @@ const Buttons = styled.div`
 `
 
 const IconBox = styled.div`
-	height: 100%;
-	width: 100px;
 	position: absolute;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	right: 0;
-	top: 0;
+	right: 5px;
+	top: 50%;
+	transform: translateY(-50%);
+
 	i {
 		font-size: 40px !important;
 		cursor: pointer;
+		height: auto !important;
 	}
 `
 
 interface Props extends RouteComponentProps {
-	toggleSideBar: React.Dispatch<React.SetStateAction<boolean>>;
-	client: any;
-	setOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>;
+	toggleSideBar: React.Dispatch<React.SetStateAction<boolean>>
+	client: any
+	setOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const Header: React.FC<Props> = ({
