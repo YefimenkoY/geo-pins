@@ -28,6 +28,7 @@ const Map = () => {
 		currentPin,
 		pins,
 		setPins,
+		mapStyle,
 	} = useMapContext()
 
 	useQuery(GET_PINS_QUERY, {
@@ -48,8 +49,8 @@ const Map = () => {
 	return (
 		<MapBox
 			width="100vw"
-			height="calc(100vh - 100px)"
-			mapStyle="mapbox://styles/mapbox/dark-v9"
+			height="calc(100vh - 44px)"
+			mapStyle={`mapbox://styles/mapbox/${mapStyle}`}
 			onClick={handleMapClick}
 			{...mapPosition}
 			mapboxApiAccessToken="pk.eyJ1IjoieXJyOTIiLCJhIjoiY2swamV2eTRrMDk0bTNucG5xdGE3YnFmYiJ9.wVtCsbkHfBmgj1mhwu8_1g"
