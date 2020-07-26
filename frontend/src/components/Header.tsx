@@ -1,12 +1,6 @@
 import React from "react"
 import styled, { StyledComponent } from "styled-components"
-import {
-	Button,
-	Dropdown,
-	Menu as _Menu,
-	Icon,
-	Container as _Container,
-} from "semantic-ui-react"
+import { Button, Dropdown, Menu as _Menu, Icon } from "semantic-ui-react"
 import { Link, withRouter } from "react-router-dom"
 import { RouteComponentProps } from "react-router"
 import useMapContext from "../context/map"
@@ -71,6 +65,7 @@ const Header: React.FC<Props> = ({
 						<Dropdown.Menu>
 							{items.map((e: MapStyle) => (
 								<Dropdown.Item
+									key={e}
 									active={e === mapStyle}
 									onClick={() => setMapStyle(e)}
 								>
@@ -89,7 +84,6 @@ const Header: React.FC<Props> = ({
 									active={pathname === routes.SIGN_UP}
 									as={Link}
 									to={routes.SIGN_UP}
-									content="Sign up"
 									primary
 								>
 									Sign Up

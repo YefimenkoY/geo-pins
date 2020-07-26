@@ -11,12 +11,15 @@ interface Props {
 	children: any
 }
 
+const [CurrentUserProvider] = useCurrentUserContext
+const [MapProvider] = useMapContext
+
 const ProvidersWrapper: React.FC<Props> = ({ children }) => (
 	<ApolloProvider client={client}>
 		<ThemeProvider theme={theme}>
-			<useCurrentUserContext.Provider>
-				<useMapContext.Provider>{children}</useMapContext.Provider>
-			</useCurrentUserContext.Provider>
+			<CurrentUserProvider>
+				<MapProvider>{children}</MapProvider>
+			</CurrentUserProvider>
 		</ThemeProvider>
 	</ApolloProvider>
 )
