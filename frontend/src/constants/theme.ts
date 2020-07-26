@@ -2,7 +2,7 @@ import { DefaultTheme } from "styled-components"
 
 const theme: DefaultTheme = {
 	header: {
-		height: "100px",
+		height: "44px",
 	},
 	colors: {
 		purple: "#a333c8",

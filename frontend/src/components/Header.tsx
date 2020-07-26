@@ -1,75 +1,37 @@
 import React from "react"
 import styled, { StyledComponent } from "styled-components"
 import {
-	Segment,
-	Container as _Container,
 	Button,
+	Dropdown,
+	Menu as _Menu,
 	Icon,
+	Container as _Container,
 } from "semantic-ui-react"
 import { Link, withRouter } from "react-router-dom"
 import { RouteComponentProps } from "react-router"
 import useMapContext from "../context/map"
 import { routes } from "../constants/routes"
 import useCurrentUserContext from "../context/currentUser"
+import { MapStyle } from "../constants/common"
 
-const Box: StyledComponent<any, any> = styled(Segment)`
-	&& {
-		height: ${({ theme }) => theme.header.height};
-		background-color: ${({ theme }) => theme.colors.purple} !important;
-		width: 100%;
-		border-radius: 0 !important;
-		color: inherit !important;
-		margin: 0 !important;
-		padding: 0 50px 0 0 !important;
-		position: relative;
-
-		@media screen and (max-width: ${({ theme }) => theme.sizes.sm}px) {
-			height: 70px;
-		}
-	}
-`
-
-const Container = styled(_Container)`
-	&& {
-		display: flex !important;
-		align-items: center;
-		justify-content: space-between;
-		height: 100%;
-	}
+const Menu = styled(_Menu)`
+	margin: 0 !important;
 `
 
 const LogoLink: StyledComponent<any, any> = styled(Link)`
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
+	margin-right: 10px;
 	h1 {
 		margin: 0;
+		color: #d01919;
 	}
 	@media screen and (max-width: ${({ theme }) => theme.sizes.sm}px) {
+		margin-right: 0;
 		h1 {
 			font-size: 11px;
 		}
-	}
-`
-
-const Buttons = styled.div`
-	display: flex;
-	justify-content: flex-end;
-`
-
-const IconBox = styled.div`
-	position: absolute;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	right: 5px;
-	top: 50%;
-	transform: translateY(-50%);
-
-	i {
-		font-size: 40px !important;
-		cursor: pointer;
-		height: auto !important;
 	}
 `
 
@@ -79,15 +41,16 @@ interface Props extends RouteComponentProps {
 	setOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>
 }
 
+const items = [MapStyle.street, MapStyle.light, MapStyle.dark, MapStyle.outdors]
+
 const Header: React.FC<Props> = ({
-	toggleSideBar,
 	location: { pathname },
 	history,
 	client,
 	setOpenSideBar,
 }) => {
 	const [currentUser, setCurrentUser] = useCurrentUserContext()
-	const { currentPosition, reset } = useMapContext()
+	const { currentPosition, reset, setMapStyle, mapStyle } = useMapContext()
 
 	React.useEffect(() => setOpenSideBar(!!currentPosition), [
 		currentPosition,
@@ -95,40 +58,55 @@ const Header: React.FC<Props> = ({
 	])
 
 	return (
-		<Box raised>
-			<IconBox>
-				<Icon onClick={toggleSideBar} name="sidebar" />
-			</IconBox>
-			<Container>
-				<LogoLink to={routes.ROOT}>
-					<Icon name="map marker alternate" size="big" color="orange" />
-					<h1>Geo Pins</h1>
-				</LogoLink>
-				<Buttons>
+		<Menu color="teal" stackable inverted size="small">
+			<LogoLink to={routes.ROOT}>
+				<Icon name="map marker alternate" size="big" color="red" />
+				<h1>Geo Pins</h1>{" "}
+			</LogoLink>
+			<Menu.Item name="home" active={true} onClick={() => {}} />
+
+			<Menu.Menu position="right">
+				{currentUser && (
+					<Dropdown item text="Map style">
+						<Dropdown.Menu>
+							{items.map((e: MapStyle) => (
+								<Dropdown.Item
+									active={e === mapStyle}
+									onClick={() => setMapStyle(e)}
+								>
+									{e}
+								</Dropdown.Item>
+							))}
+						</Dropdown.Menu>
+					</Dropdown>
+				)}
+
+				<Menu.Item>
 					{!currentUser ? (
 						<>
-							<Button
-								active={pathname === routes.LOG_IN}
-								as={Link}
-								to={routes.LOG_IN}
-								content="Log in"
-								inverted
-								color="blue"
-							/>
-							<Button
-								active={pathname === routes.SIGN_UP}
-								as={Link}
-								to={routes.SIGN_UP}
-								content="Sign up"
-								inverted
-								color="brown"
-							/>
+							<Button.Group>
+								<Button
+									active={pathname === routes.SIGN_UP}
+									as={Link}
+									to={routes.SIGN_UP}
+									content="Sign up"
+									primary
+								>
+									Sign Up
+								</Button>
+								<Button.Or text="or" />
+								<Button
+									active={pathname === routes.LOG_IN}
+									as={Link}
+									to={routes.LOG_IN}
+									secondary
+								>
+									Sign In
+								</Button>
+							</Button.Group>
 						</>
 					) : (
 						<Button
-							content="Sign out"
-							inverted
-							color="brown"
 							onClick={async () => {
 								reset()
 								localStorage.removeItem("token")
@@ -136,11 +114,14 @@ const Header: React.FC<Props> = ({
 								await client.resetStore()
 								history.push(routes.LOG_IN)
 							}}
-						/>
+							color="red"
+						>
+							Log Out
+						</Button>
 					)}
-				</Buttons>
-			</Container>
-		</Box>
+				</Menu.Item>
+			</Menu.Menu>
+		</Menu>
 	)
 }
 
