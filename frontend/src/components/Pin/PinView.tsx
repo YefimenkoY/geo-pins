@@ -4,6 +4,7 @@ import { useMutation } from "@apollo/client"
 
 import mapContext from "../../context/map"
 import { DELETE_PIN } from "./queries"
+import { intervalDuration } from "../../helpers/date"
 
 export default () => {
 	const { currentPin, setCurrentPin, setPins } = mapContext()
@@ -14,21 +15,20 @@ export default () => {
 		},
 	})
 	if (!currentPin) return null
-
 	const { image, description, title, createdAt } = currentPin
 
+	const date = intervalDuration(+createdAt)
 	const onDelete = () =>
 		deletePin({ variables: { input: { pinId: currentPin.id } } })
 
 	return (
 		<Card>
-			<Image src={image} wrapped ui={false} />
 			<Card.Content>
 				<Card.Header>{title}</Card.Header>
-				<Card.Meta>
-					<span className="date">{createdAt}</span>
-				</Card.Meta>
 				<Card.Description>{description}</Card.Description>
+				<Card.Meta>
+					<span className="date">{`Created ${date}`}</span>
+				</Card.Meta>
 			</Card.Content>
 			<Card.Content extra>
 				<Button

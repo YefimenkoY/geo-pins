@@ -45,11 +45,10 @@ const Header: React.FC<Props> = ({
 }) => {
 	const [currentUser, setCurrentUser] = useCurrentUserContext()
 	const { currentPosition, reset, setMapStyle, mapStyle } = useMapContext()
-	// console.log(currentPosition)
-	// React.useEffect(() => setOpenSideBar(!!currentPosition), [
-	// 	currentPosition,
-	// 	setOpenSideBar,
-	// ])
+
+	React.useEffect(() => {
+		setOpenSideBar(!!currentPosition)
+	}, [currentPosition])
 
 	return (
 		<Menu color="teal" stackable inverted size="small">

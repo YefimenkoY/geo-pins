@@ -77,7 +77,7 @@ const Map = () => {
 							setMapPosition({
 								latitude: +lat,
 								longitude: +lon,
-								zoom: DEFAULT_ZOOM,
+								zoom: 5,
 							})
 						}}
 						name="map marker alternate"
