@@ -3,6 +3,8 @@ import styled, { StyledComponent } from "styled-components"
 import { Button, Dropdown, Menu as _Menu, Icon } from "semantic-ui-react"
 import { Link, withRouter } from "react-router-dom"
 import { RouteComponentProps } from "react-router"
+import { ApolloClient } from "@apollo/client"
+
 import useMapContext from "../context/map"
 import { routes } from "../constants/routes"
 import useCurrentUserContext from "../context/currentUser"
@@ -30,34 +32,22 @@ const LogoLink: StyledComponent<any, any> = styled(Link)`
 `
 
 interface Props extends RouteComponentProps {
-	toggleSideBar: React.Dispatch<React.SetStateAction<boolean>>
-	client: any
-	setOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>
+	client: ApolloClient<any>
 }
 
 const items = [MapStyle.street, MapStyle.light, MapStyle.dark, MapStyle.outdors]
 
-const Header: React.FC<Props> = ({
-	location: { pathname },
-	history,
-	client,
-	setOpenSideBar,
-}) => {
+const Header: React.FC<Props> = ({ location: { pathname }, client }) => {
 	const [currentUser, setCurrentUser] = useCurrentUserContext()
-	const { currentPosition, reset, setMapStyle, mapStyle } = useMapContext()
-
-	React.useEffect(() => {
-		setOpenSideBar(!!currentPosition)
-	}, [currentPosition])
+	const { reset, setMapStyle, mapStyle } = useMapContext()
 
 	return (
 		<Menu color="teal" stackable inverted size="small">
 			<LogoLink to={routes.ROOT}>
 				<Icon name="map marker alternate" size="big" color="red" />
-				<h1>Geo Pins</h1>{" "}
+				<h1>Geo Pins</h1>
 			</LogoLink>
 			<Menu.Item name="home" active={true} onClick={() => {}} />
-
 			<Menu.Menu position="right">
 				{currentUser && (
 					<Dropdown item text="Map style">
@@ -74,7 +64,6 @@ const Header: React.FC<Props> = ({
 						</Dropdown.Menu>
 					</Dropdown>
 				)}
-
 				<Menu.Item>
 					{!currentUser ? (
 						<>
