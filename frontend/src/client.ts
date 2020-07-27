@@ -1,27 +1,35 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client"
-import { createHttpLink } from "apollo-link-http"
-import { setContext } from "apollo-link-context"
-import { ApolloLink } from "apollo-link"
-import { Context } from "@apollo/react-common"
+import {
+	ApolloClient,
+	ApolloLink,
+	InMemoryCache,
+	HttpLink,
+	concat,
+} from "@apollo/client"
 
-const httpLink: ApolloLink = createHttpLink({
+const authMiddleware = new ApolloLink((operation, forward) => {
+	operation.setContext(({ headers = {} }) => ({
+		headers: {
+			...headers,
+			authorization: localStorage.getItem("token") || "",
+		},
+	}))
+
+	return forward(operation)
+})
+
+const httpLink = new HttpLink({
 	uri:
 		process.env.NODE_ENV === "development"
-			? "http://localhost:5000/graphql" 
+			? "http://localhost:5000/graphql"
 			: "/graphql",
 })
 
-const authLink: Context = setContext((_, { headers }) => {
-	const token: string = localStorage.getItem("token") || ""
-	return {
-		headers: {
-			...headers,
-			authorization: token,
-		},
-	}
-})
-
 export default new ApolloClient({
-	link: authLink.concat(httpLink),
+	link: concat(authMiddleware, httpLink),
 	cache: new InMemoryCache(),
+	// defaultOptions: {
+	// 	watchQuery: {
+	// 		fetchPolicy: "network-only",
+	// 	},
+	// },
 })

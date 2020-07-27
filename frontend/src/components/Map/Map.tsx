@@ -1,7 +1,7 @@
 import React from "react"
 import MapBox, { Marker, Popup } from "react-map-gl"
 import { Icon } from "semantic-ui-react"
-import { useQuery } from "@apollo/react-hooks"
+import { useQuery } from "@apollo/client"
 import styled from "styled-components"
 
 import { GET_PINS_QUERY } from "./queries"

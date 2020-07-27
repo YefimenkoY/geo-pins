@@ -9,7 +9,7 @@ import {
 	Message,
 } from "semantic-ui-react"
 import styled from "styled-components"
-import { useMutation } from "@apollo/react-hooks"
+import { useMutation } from "@apollo/client"
 import { withRouter, RouteComponentProps } from "react-router-dom"
 
 import { routes } from "../../constants/routes"
@@ -33,18 +33,19 @@ const FormBox = styled.div`
 `
 
 interface Props extends RouteComponentProps {
-	refetch: any;
+	refetch: any
 }
 
 const SignIn: React.FC<Props> = ({ history, refetch }) => {
 	const [logIn, { loading, error }] = useMutation(SIGN_IN_MUTATION, {
 		onCompleted(data) {
 			if (data) {
-				refetch()
 				localStorage.setItem("token", data.SignIn.token)
-				return history.push(routes.ROOT)
+				setTimeout(() => {
+					refetch()
+					return history.push(routes.ROOT)
+				}, 1000)
 			}
-			refetch()
 		},
 		onError(e) {
 			localStorage.setItem("token", "")

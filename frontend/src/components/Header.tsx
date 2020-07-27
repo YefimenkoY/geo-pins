@@ -45,11 +45,11 @@ const Header: React.FC<Props> = ({
 }) => {
 	const [currentUser, setCurrentUser] = useCurrentUserContext()
 	const { currentPosition, reset, setMapStyle, mapStyle } = useMapContext()
-
-	React.useEffect(() => setOpenSideBar(!!currentPosition), [
-		currentPosition,
-		setOpenSideBar,
-	])
+	// console.log(currentPosition)
+	// React.useEffect(() => setOpenSideBar(!!currentPosition), [
+	// 	currentPosition,
+	// 	setOpenSideBar,
+	// ])
 
 	return (
 		<Menu color="teal" stackable inverted size="small">
@@ -103,10 +103,10 @@ const Header: React.FC<Props> = ({
 						<Button
 							onClick={async () => {
 								reset()
-								localStorage.removeItem("token")
-								setCurrentUser(null)
 								await client.resetStore()
-								history.push(routes.LOG_IN)
+								setCurrentUser(null)
+								localStorage.removeItem("token")
+								window.location.reload()
 							}}
 							color="red"
 						>

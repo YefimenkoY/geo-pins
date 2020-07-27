@@ -15,6 +15,8 @@ services:
     volumes:
       - /usr/app/node_modules
       - ./backend/src:/usr/app/src
+      - ./backend/package.json:/usr/app/package.json
+      - ./backend/yarn.lock:/usr/app/yarn.lock
     environment:
       - RDS_HOSTNAME=db
       - RDS_PORT=5432
@@ -31,5 +33,7 @@ services:
     volumes:
       - /usr/app/node_modules
       - ./frontend/src:/usr/app/src
+      - ./frontend/package.json:/usr/app/package.json
+      - ./frontend/yarn.lock:/usr/app/yarn.lock
     environment:
       - REACT_APP_MAP_BOX_TOKEN=pk.eyJ1IjoieXJyOTIiLCJhIjoiY2swamV2eTRrMDk0bTNucG5xdGE3YnFmYiJ9.wVtCsbkHfBmgj1mhwu8_1g

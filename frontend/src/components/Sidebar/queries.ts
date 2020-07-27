@@ -1,15 +1,15 @@
-import { gql } from "apollo-boost";
+import { gql } from "@apollo/client"
 
-import { pinFragment } from "../Pin/queries";
+import { pinFragment } from "../Pin/queries"
 
 export const CREQTE_PIN_MUTATION = gql`
-  mutation CREQTE_PIN_MUTATION($input: CreatePinInput!) {
-    CreatePin(input: $input) {
-      ...pin
-    }
-  }
-  ${pinFragment}
-`;
+	mutation CREQTE_PIN_MUTATION($input: CreatePinInput!) {
+		CreatePin(input: $input) {
+			...pin
+		}
+	}
+	${pinFragment}
+`
 
 // export const GET_PIN = gql`
 //   query GET_PIN($input: GetPinInput!) {

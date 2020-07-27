@@ -20,9 +20,7 @@ export default createUseContext(() => {
 	const [currentPosition, setCurrentPosition] = useState<IPosition | null>(
 		DEFAULT_MAP_POSITION,
 	)
-	const [mapPosition, setMapPosition] = useState<IPosition | null>(
-		DEFAULT_MAP_POSITION,
-	)
+	const [mapPosition, setMapPosition] = useState<IPosition | null>(null)
 	const [currentPin, setCurrentPin] = useState<GET_PINS_QUERY_GetPins | null>(
 		null,
 	)

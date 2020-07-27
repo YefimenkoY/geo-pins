@@ -1,7 +1,7 @@
 import React from "react"
 import { Segment, Form, Button, Icon, Header } from "semantic-ui-react"
 import axios from "axios"
-import { useMutation } from "@apollo/react-hooks"
+import { useMutation } from "@apollo/client"
 
 import mapContext from "../../context/map"
 import { CREQTE_PIN_MUTATION } from "./queries"

@@ -1,13 +1,13 @@
-import { gql } from "apollo-boost";
+import { gql } from "@apollo/client"
 
-import { pinFragment } from "../Pin/queries";
+import { pinFragment } from "../Pin/queries"
 
 export const GET_PINS_QUERY = gql`
-  query GET_PINS_QUERY {
-    GetPins {
-      id
-      ...pin
-    }
-  }
-  ${pinFragment}
-`;
+	query GET_PINS_QUERY {
+		GetPins {
+			id
+			...pin
+		}
+	}
+	${pinFragment}
+`
