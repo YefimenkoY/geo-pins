@@ -1,5 +1,5 @@
 import React from "react"
-import { ApolloProvider } from "@apollo/react-hooks"
+import { ApolloProvider } from "@apollo/client"
 import { ThemeProvider } from "styled-components"
 
 import useCurrentUserContext from "./context/currentUser"
