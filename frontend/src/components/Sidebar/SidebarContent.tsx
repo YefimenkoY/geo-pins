@@ -1,5 +1,5 @@
 import React from "react"
-import { Segment, Form, Button, Icon, Header } from "semantic-ui-react"
+import { Segment, Form, Button, Label, Icon, Header } from "semantic-ui-react"
 import axios from "axios"
 import { useMutation } from "@apollo/client"
 
@@ -67,6 +67,18 @@ const SidebarContent = () => {
 				Create your pin!
 				<Icon color="red" name="map pin" />
 			</Header>
+			{currentPosition && (
+				<>
+					<Label>
+						Lat
+						<Label.Detail>{currentPosition.latitude.toFixed(4)}</Label.Detail>
+					</Label>
+					<Label>
+						Lon
+						<Label.Detail>{currentPosition.latitude.toFixed(4)}</Label.Detail>
+					</Label>
+				</>
+			)}
 			<Form onSubmit={handleSubmit} inverted>
 				<Form.Group widths="equal">
 					<Form.Input

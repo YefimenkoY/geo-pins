@@ -5,6 +5,7 @@ import { Menu, Sidebar } from "semantic-ui-react"
 
 import Header from "./Header"
 import SidebarContent from "./Sidebar"
+import layoutContext from "../context/layout"
 
 const Box = styled.div`
 	width: 100vw;
@@ -22,16 +23,11 @@ interface Props {
 }
 
 const Layout: React.FC<Props> = ({ children, client }) => {
-	const [sidebar, setSidebar] = React.useState(false)
-	const onToggle = () => setSidebar(!sidebar)
+	const { sidebarOpen } = layoutContext()
 
 	return (
 		<Box>
-			<Header
-				toggleSideBar={onToggle}
-				setOpenSideBar={setSidebar}
-				client={client}
-			/>
+			<Header client={client} />
 			<Sidebar.Pushable>
 				<Sidebar
 					as={Menu}
@@ -39,7 +35,7 @@ const Layout: React.FC<Props> = ({ children, client }) => {
 					animation="overlay"
 					icon="labeled"
 					vertical
-					visible={sidebar}
+					visible={sidebarOpen}
 				>
 					<SidebarContent />
 				</Sidebar>
