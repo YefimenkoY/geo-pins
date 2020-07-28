@@ -17,7 +17,12 @@ input DeletePinInput {
   pinId: String!
 }
 
+input GetPinInput {
+  id: String!
+}
+
 type Query {
+  GetPin(input: GetPinInput!): Pin
   GetPins: [Pin]!
   CurrentUser: User
 }

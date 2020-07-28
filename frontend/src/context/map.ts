@@ -2,6 +2,7 @@ import { MapStyle } from "./../constants/common"
 import { useState, useEffect } from "react"
 import createUseContext from "constate"
 import { GET_PINS_QUERY_GetPins } from "../types/GET_PINS_QUERY"
+import { getHours } from "date-fns"
 
 interface IPosition {
 	longitude: number
@@ -25,7 +26,9 @@ export default createUseContext(() => {
 		null,
 	)
 	const [pins, setPins] = useState<GET_PINS_QUERY_GetPins[]>([])
-	const [mapStyle, setMapStyle] = useState<MapStyle>(MapStyle.street)
+	const [mapStyle, setMapStyle] = useState<MapStyle>(
+		getHours(new Date()) >= 18 ? MapStyle.dark : MapStyle.street,
+	)
 
 	useEffect(() => {
 		navigator.geolocation.getCurrentPosition(

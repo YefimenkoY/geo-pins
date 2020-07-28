@@ -6,8 +6,10 @@ import { GET_CURRENT_USER_QUERY } from "./Auth/queries"
 import useCurrentUserContext from "../context/currentUser"
 import useMapContext from "../context/map"
 import layoutContext from "../context/layout"
+import { useLocation } from "react-router-dom"
 
 export default () => {
+	const { pathname } = useLocation()
 	const [getUser, { loading, data, refetch, networkStatus }] = useLazyQuery(
 		GET_CURRENT_USER_QUERY,
 	)
@@ -16,6 +18,9 @@ export default () => {
 	const { setSidebarOpen } = layoutContext()
 
 	React.useEffect(() => {
+		if (pathname !== "/") {
+			return setSidebarOpen(false)
+		}
 		setSidebarOpen(!!currentPosition && !!currentUser)
 	}, [currentPosition, currentUser])
 

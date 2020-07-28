@@ -28,3 +28,21 @@ export const DELETE_PIN = gql`
 	}
 	${pinFragment}
 `
+
+export const GET_PIN = gql`
+	query GET_PIN($input: GetPinInput!) {
+		GetPin(input: $input) {
+			id
+			title
+			createdAt
+			description
+			image
+			lat
+			lon
+			author {
+				id
+				login
+			}
+		}
+	}
+`

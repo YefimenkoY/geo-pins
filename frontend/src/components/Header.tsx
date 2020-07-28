@@ -1,8 +1,7 @@
 import React from "react"
 import styled, { StyledComponent } from "styled-components"
 import { Button, Dropdown, Menu as _Menu, Icon } from "semantic-ui-react"
-import { Link, withRouter } from "react-router-dom"
-import { RouteComponentProps } from "react-router"
+import { Link, useLocation } from "react-router-dom"
 import { ApolloClient } from "@apollo/client"
 
 import useMapContext from "../context/map"
@@ -39,13 +38,14 @@ const LogoLink: StyledComponent<any, any> = styled(Link)`
 	}
 `
 
-interface Props extends RouteComponentProps {
+interface Props {
 	client: ApolloClient<any>
 }
 
 const items = [MapStyle.street, MapStyle.light, MapStyle.dark, MapStyle.outdors]
 
-const Header: React.FC<Props> = ({ location: { pathname }, client }) => {
+export default function ({ client }: Props) {
+	const { pathname } = useLocation()
 	const [currentUser, setCurrentUser] = useCurrentUserContext()
 	const { reset, setMapStyle, mapStyle } = useMapContext()
 	const { setHeaderHeight, headerHeight } = layoutContext()
@@ -70,7 +70,7 @@ const Header: React.FC<Props> = ({ location: { pathname }, client }) => {
 				<Menu.Item name="home" active={true} onClick={() => {}} />
 				<Menu.Menu position="right">
 					{currentUser && (
-						<Dropdown item text="Map style">
+						<Dropdown disabled={pathname !== routes.ROOT} item text="Map style">
 							<Dropdown.Menu>
 								{items.map((e: MapStyle) => (
 									<Dropdown.Item
@@ -127,5 +127,3 @@ const Header: React.FC<Props> = ({ location: { pathname }, client }) => {
 		</div>
 	)
 }
-
-export default withRouter(Header)

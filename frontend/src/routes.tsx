@@ -2,7 +2,6 @@ import React from "react"
 import { Switch, Route, Redirect } from "react-router-dom"
 import { useApolloClient } from "@apollo/client"
 import { get } from "lodash"
-import { Segment } from "semantic-ui-react"
 
 import Layout from "./components/Layout"
 import ProtectedRoute from "./components/Auth/ProtectedRoute"
@@ -12,6 +11,8 @@ import SignIn from "./components/Auth/SignIn"
 import SignUp from "./components/Auth/SignUp"
 import Main from "./components/Main"
 import { GET_CURRENT_USER_QUERY } from "./types/GET_CURRENT_USER_QUERY"
+import PinPage from "./components/Pin/PinPage"
+import FullScreenLoader from "./components/FullScreenLoader"
 
 interface Props {
 	data: GET_CURRENT_USER_QUERY
@@ -31,7 +32,7 @@ const Routes: React.FC<Props> = ({ data, refetch, loading }) => {
 	}, [user])
 
 	return loading ? (
-		<Segment loading style={{ height: "100vh" }} />
+		<FullScreenLoader />
 	) : (
 		<Switch>
 			<Layout client={client}>
@@ -51,6 +52,12 @@ const Routes: React.FC<Props> = ({ data, refetch, loading }) => {
 					isLoggedIn={isLoggedIn}
 					refetch={refetch}
 					component={Main}
+					exact
+				/>
+				<ProtectedRoute
+					path={routes.PIN_PAGE}
+					isLoggedIn={isLoggedIn}
+					component={PinPage}
 					exact
 				/>
 			</Layout>
