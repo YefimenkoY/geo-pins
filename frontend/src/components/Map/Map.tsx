@@ -6,6 +6,7 @@ import styled from "styled-components"
 
 import { GET_PINS_QUERY } from "./queries"
 import useMapContext, { DEFAULT_ZOOM } from "../../context/map"
+import layoutContext from "../../context/layout"
 import { GET_PINS_QUERY_GetPins as IPin } from "../../types/GET_PINS_QUERY"
 import PinView from "../Pin/PinView"
 
@@ -30,6 +31,7 @@ const Map = () => {
 		setPins,
 		mapStyle,
 	} = useMapContext()
+	const { headerHeight } = layoutContext()
 
 	useQuery(GET_PINS_QUERY, {
 		onCompleted(data) {
@@ -49,7 +51,7 @@ const Map = () => {
 	return (
 		<MapBox
 			width="100vw"
-			height="calc(100vh - 44px)"
+			height={`calc(100vh - ${headerHeight}px)`}
 			mapStyle={`mapbox://styles/mapbox/${mapStyle}`}
 			onClick={handleMapClick}
 			{...mapPosition}

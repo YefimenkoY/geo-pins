@@ -9,5 +9,6 @@ export default createGlobalStyle`
   body {
     font-family: 'Roboto Mono', monospace !important;
     color: #3e3e3e !important;
+    overflow: hidden;
   }
 `

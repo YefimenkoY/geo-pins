@@ -10,11 +10,8 @@ import layoutContext from "../context/layout"
 const Box = styled.div`
 	width: 100vw;
 	position: relative;
-	height: calc(100vh - ${({ theme }) => theme.header.height});
+	overflow: hidden;
 	position: relative;
-	.mapboxgl-map {
-		height: calc(100vh - ${({ theme }) => theme.header.height}) !important;
-	}
 `
 
 interface Props {
