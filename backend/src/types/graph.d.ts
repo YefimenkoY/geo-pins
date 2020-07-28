@@ -31,6 +31,10 @@ export type DeletePinInput = {
   pinId: Scalars['String'];
 };
 
+export type GetPinInput = {
+  id: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   CreatePin?: Maybe<Pin>;
@@ -74,8 +78,14 @@ export type Pin = {
 
 export type Query = {
   __typename?: 'Query';
+  GetPin?: Maybe<Pin>;
   GetPins: Array<Maybe<Pin>>;
   CurrentUser?: Maybe<User>;
+};
+
+
+export type QueryGetPinArgs = {
+  input: GetPinInput;
 };
 
 export type SignInUser = {
@@ -186,9 +196,10 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
+  GetPinInput: GetPinInput;
+  String: ResolverTypeWrapper<Scalars['String']>;
   Pin: ResolverTypeWrapper<Pin>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
-  String: ResolverTypeWrapper<Scalars['String']>;
   User: ResolverTypeWrapper<User>;
   Comment: ResolverTypeWrapper<Comment>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -203,9 +214,10 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Query: {};
+  GetPinInput: GetPinInput;
+  String: Scalars['String'];
   Pin: Pin;
   ID: Scalars['ID'];
-  String: Scalars['String'];
   User: User;
   Comment: Comment;
   Mutation: {};
@@ -246,6 +258,7 @@ export type PinResolvers<ContextType = any, ParentType extends ResolversParentTy
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  GetPin?: Resolver<Maybe<ResolversTypes['Pin']>, ParentType, ContextType, RequireFields<QueryGetPinArgs, 'input'>>;
   GetPins?: Resolver<Array<Maybe<ResolversTypes['Pin']>>, ParentType, ContextType>;
   CurrentUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
 };

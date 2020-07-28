@@ -1,0 +1,7 @@
+input GetPinInput {
+	id: String!
+}
+
+type Query {
+	GetPin(input: GetPinInput!): Pin
+}

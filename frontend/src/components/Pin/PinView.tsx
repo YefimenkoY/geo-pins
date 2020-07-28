@@ -5,9 +5,16 @@ import { useMutation } from "@apollo/client"
 import mapContext from "../../context/map"
 import { DELETE_PIN } from "./queries"
 import { intervalDuration } from "../../helpers/date"
+import { Link } from "react-router-dom"
 
 export default () => {
-	const { currentPin, setCurrentPin, setPins } = mapContext()
+	const {
+		currentPin,
+		setCurrentPin,
+		setCurrentPosition,
+		setPins,
+	} = mapContext()
+
 	const [deletePin, { loading }] = useMutation(DELETE_PIN, {
 		onCompleted(data) {
 			setCurrentPin(null)
@@ -15,7 +22,7 @@ export default () => {
 		},
 	})
 	if (!currentPin) return null
-	const { image, description, title, createdAt } = currentPin
+	const { id, description, title, createdAt } = currentPin
 
 	const date = intervalDuration(+createdAt)
 	const onDelete = () =>
@@ -31,6 +38,14 @@ export default () => {
 				</Card.Meta>
 			</Card.Content>
 			<Card.Content extra>
+				<Button
+					as={Link}
+					to={`/pin/${id}`}
+					circular
+					icon="external alternate"
+					color="green"
+					onClick={() => setCurrentPosition(null)}
+				/>
 				<Button
 					circular
 					icon="trash"
