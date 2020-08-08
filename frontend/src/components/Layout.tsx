@@ -5,7 +5,7 @@ import { Menu, Sidebar } from "semantic-ui-react"
 
 import Header from "./Header"
 import SidebarContent from "./Sidebar"
-import layoutContext from "../context/layout"
+import layoutContext from "context/layout"
 
 const Box = styled.div`
 	width: 100vw;
@@ -29,6 +29,7 @@ const Layout: React.FC<Props> = ({ children, client }) => {
 				<Sidebar
 					as={Menu}
 					direction="right"
+					width="wide"
 					animation="overlay"
 					icon="labeled"
 					vertical

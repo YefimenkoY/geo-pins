@@ -3,9 +3,9 @@ import { useLazyQuery, NetworkStatus } from "@apollo/client"
 
 import Routes from "../routes"
 import { GET_CURRENT_USER_QUERY } from "./Auth/queries"
-import useCurrentUserContext from "../context/currentUser"
-import useMapContext from "../context/map"
-import layoutContext from "../context/layout"
+import useCurrentUserContext from "context/user"
+import useMapContext from "context/map"
+import layoutContext from "context/layout"
 import { useLocation } from "react-router-dom"
 
 export default () => {

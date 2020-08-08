@@ -1,126 +1,117 @@
 import React from "react"
-import { Segment, Form, Button, Label, Icon, Header } from "semantic-ui-react"
-import axios from "axios"
-import { useMutation } from "@apollo/client"
+import { Segment, Dropdown, Input, List, Label } from "semantic-ui-react"
+import { debounce } from "lodash"
+import styled, { css, StyledFunction } from "styled-components"
 
-import mapContext from "../../context/map"
-import { CREQTE_PIN_MUTATION } from "./queries"
+import mapContext from "context/map"
+import { getFeatures } from "../../api/map"
+import { FeatureType, Color, Feature } from "types/map"
+import { featureColors } from "../../constants/common"
+
+const options = Object.keys(FeatureType)
+	.map(f => ({
+		key: f,
+		text: f,
+		value: f,
+	}))
+	.concat({ key: "all", text: "all", value: "" })
+
+const Content = styled(List.Content)`
+	display: flex;
+	flex-direction: column;
+	cursor: pointer;
+
+	.header,
+	.description {
+		width: fit-content;
+		text-align: left;
+	}
+
+	${({ active }) =>
+		active &&
+		css`
+			background: #d9e778;
+		`}
+`
 
 const SidebarContent = () => {
-	const { setCurrentPosition, currentPosition, setPins } = mapContext()
-	const fileRef = React.createRef<HTMLInputElement>()
-	const [image, setImage] = React.useState<File | null>(null)
-	const [title, setTitle] = React.useState("")
-	const [description, setDescription] = React.useState("")
-	function cleanData() {
-		setImage(null)
-		setTitle("")
-		setDescription("")
-		setCurrentPosition(null)
-	}
-	const [createPin, { loading }] = useMutation(CREQTE_PIN_MUTATION, {
-		onCompleted(data) {
-			setPins(prevPins => [...prevPins, data.CreatePin])
-			cleanData()
-		},
-	})
-	const handleImageUpload = async () => {
-		if (image === null) return
-		const data = new FormData()
-		data.append("file", image)
-		data.append("upload_preset", "geopins")
-		data.append("cloud_name", "dxdjcnhap")
+	const [feature, setFeature] = React.useState("")
+	const [loading, setLoading] = React.useState(false)
+	const [featureType, setFeatureType] = React.useState<FeatureType | "">("")
+	const {
+		features,
+		setFeatures,
+		setMapPosition,
+		setCurrentPin,
+		currentPin,
+	} = mapContext()
 
-		try {
-			const { data: image } = await axios.post(
-				"https://api.cloudinary.com/v1_1/dxdjcnhap/image/upload",
-				data,
-			)
-			return image.url
-		} catch (e) {
-			console.warn(`failed to upload image: ${e}`)
-			setImage(null)
-		}
-	}
-
-	const handleSubmit = async () => {
-		const uploadedImage = await handleImageUpload()
-
-		uploadedImage &&
-			currentPosition &&
-			createPin({
-				variables: {
-					input: {
-						title,
-						image: uploadedImage,
-						description,
-						lat: String(currentPosition.latitude),
-						lon: String(currentPosition.longitude),
-					},
-				},
-			})
-	}
+	React.useEffect(() => {
+		const search = debounce(async function () {
+			setLoading(true)
+			const { data } = await getFeatures({ feature, types: featureType })
+			setLoading(false)
+			if (data) setFeatures(data.features)
+		}, 450)
+		feature.length > 3 && search()
+	}, [feature, featureType])
 
 	return (
-		<Segment inverted color="grey">
-			<Header as="h3" textAlign="center">
-				Create your pin!
-				<Icon color="red" name="map pin" />
-			</Header>
-			{currentPosition && (
-				<>
-					<Label>
-						Lat
-						<Label.Detail>{currentPosition.latitude.toFixed(4)}</Label.Detail>
-					</Label>
-					<Label>
-						Lon
-						<Label.Detail>{currentPosition.latitude.toFixed(4)}</Label.Detail>
-					</Label>
-				</>
-			)}
-			<Form onSubmit={handleSubmit} inverted>
-				<Form.Group widths="equal">
-					<Form.Input
-						onChange={e => setTitle(e.target.value)}
-						value={title}
-						fluid
-						label="Title"
-						placeholder="Title"
+		<Segment>
+			<Input
+				value={feature}
+				loading={loading}
+				onChange={e => setFeature(e.target.value)}
+				action={
+					<Dropdown
+						button
+						basic
+						loading={loading}
+						floating
+						placeholder="location type"
+						onChange={(e, { value }) => setFeatureType(value as FeatureType)}
+						options={options}
 					/>
-				</Form.Group>
-				<Form.Group widths="equal">
-					<Form.TextArea
-						value={description}
-						onInput={(e: any) => setDescription(e.target.value)}
-						label="Description"
-						placeholder="Descriptionle"
-					/>
-				</Form.Group>
-				<Form.Group widths="equal">
-					<Button
-						content="Choose image"
-						labelPosition="left"
-						icon={!image ? "image" : "check"}
-						color={!image ? "red" : "green"}
-						onClick={() => fileRef.current && fileRef.current.click()}
-					/>
-					<input
-						ref={fileRef}
-						type="file"
-						hidden
-						onChange={e => e.target.files && setImage(e.target.files[0])}
-					/>
-				</Form.Group>
-				<Button disabled={!image} loading={loading} color="green" type="submit">
-					<Icon name="send" />
-					Submit
-				</Button>
-				<Button onClick={() => setCurrentPosition(null)} color="red">
-					<Icon color="teal" name="trash alternate" />
-					Cencel
-				</Button>
-			</Form>
+				}
+				icon="search"
+				iconPosition="left"
+				placeholder="Search..."
+			/>
+			<List divided relaxed>
+				{features.map((f: Feature) => {
+					const {
+						id,
+						text,
+						place_name,
+						place_type: [d],
+						center: [lon, lat],
+					} = f
+					return (
+						<List.Item
+							key={id}
+							onClick={() => {
+								setMapPosition({
+									longitude: lon,
+									latitude: lat,
+									zoom: 12,
+								})
+								setCurrentPin(f)
+							}}
+						>
+							<Content active={currentPin !== null && currentPin.id === id}>
+								<List.Header as="h3">
+									{" "}
+									<Label color={featureColors[d] as Color} horizontal>
+										{d}
+									</Label>
+									{text}
+								</List.Header>
+								<List.Description as="p">{place_name}</List.Description>
+							</Content>
+						</List.Item>
+					)
+				})}
+			</List>
 		</Segment>
 	)
 }
