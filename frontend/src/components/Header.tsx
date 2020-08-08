@@ -4,12 +4,12 @@ import { Button, Dropdown, Menu as _Menu, Icon } from "semantic-ui-react"
 import { Link, useLocation } from "react-router-dom"
 import { ApolloClient } from "@apollo/client"
 
-import useMapContext from "../context/map"
+import useMapContext from "context/map"
 import { routes } from "../constants/routes"
-import useCurrentUserContext from "../context/currentUser"
-import layoutContext from "../context/layout"
+import useCurrentUserContext from "context/user"
+import layoutContext from "context/layout"
 import { MapStyle } from "../constants/common"
-import useWindowSize from "../hooks/useWindowSize"
+import useWindowSize from "hooks/useWindowSize"
 
 const Menu = styled(_Menu)`
 	margin: 0 !important;

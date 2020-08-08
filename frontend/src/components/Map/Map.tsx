@@ -3,12 +3,15 @@ import MapBox, { Marker, Popup } from "react-map-gl"
 import { Icon } from "semantic-ui-react"
 import { useQuery } from "@apollo/client"
 import styled from "styled-components"
+import _ from "lodash"
 
 import { GET_PINS_QUERY } from "./queries"
-import useMapContext, { DEFAULT_ZOOM } from "../../context/map"
-import layoutContext from "../../context/layout"
-import { GET_PINS_QUERY_GetPins as IPin } from "../../types/GET_PINS_QUERY"
+import useMapContext, { DEFAULT_ZOOM } from "context/map"
+import layoutContext from "context/layout"
 import PinView from "../Pin/PinView"
+import { Feature, Color } from "types/map"
+
+import { featureColors } from "../../constants/common"
 
 const PinIcon = styled(Icon)`
 	cursor: pointer;
@@ -30,6 +33,7 @@ const Map = () => {
 		pins,
 		setPins,
 		mapStyle,
+		features,
 	} = useMapContext()
 	const { headerHeight } = layoutContext()
 
@@ -65,33 +69,40 @@ const Map = () => {
 					<Icon name="map marker alternate" color="green" size="big" />
 				</Marker>
 			)}
-			{pins.map(({ lat, lon, id, ...pin }: IPin) => (
-				<Marker
-					key={id}
-					latitude={+lat}
-					longitude={+lon}
-					offsetLeft={-17}
-					offsetTop={-30}
-				>
-					<PinIcon
-						onClick={() => {
-							setCurrentPin({ id, lat, lon, ...pin })
-							setMapPosition({
-								latitude: +lat,
-								longitude: +lon,
-								zoom: 5,
-							})
-						}}
-						name="map marker alternate"
-						color="pink"
-						size="big"
-					/>
-				</Marker>
-			))}
+			{(features || []).map((f: Feature) => {
+				const {
+					id,
+					place_type: [type],
+					center: [lon, lat],
+				} = f
+				return (
+					<Marker
+						key={id}
+						latitude={lat}
+						longitude={lon}
+						offsetLeft={-17}
+						offsetTop={-30}
+					>
+						<PinIcon
+							onClick={() => {
+								setCurrentPin(f)
+								setMapPosition({
+									latitude: lat,
+									longitude: lon,
+									zoom: 4,
+								})
+							}}
+							name="map marker alternate"
+							color={featureColors[type] as Color}
+							size="big"
+						/>
+					</Marker>
+				)
+			})}
 			{currentPin && (
 				<Popup
-					latitude={+currentPin.lat}
-					longitude={+currentPin.lon}
+					latitude={currentPin.center[1]}
+					longitude={currentPin.center[0]}
 					closeButton
 					closeOnClick={false}
 					onClose={() => setCurrentPin(null)}
