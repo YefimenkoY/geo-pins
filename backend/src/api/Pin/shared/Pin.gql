@@ -1,11 +1,11 @@
 type Pin {
-  id: ID
-  title: String!
-  createdAt: String!
-  description: String!
-  image: String
-  lat: String!
-  lon: String!
-  author: User
-  comments: [Comment]
+	id: String!
+	pinId: String!
+	text: String!
+	createdAt: String!
+	placeName: String!
+	placeType: String!
+	center: [Float!]!
+	author: User
+	comments: [Comment]
 }

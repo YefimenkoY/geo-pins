@@ -4,22 +4,22 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GET_PINS_QUERY
+// GraphQL fragment: pin
 // ====================================================
 
-export interface GET_PINS_QUERY_GetPins_comments {
+export interface pin_comments {
   __typename: "Comment";
   text: string;
 }
 
-export interface GET_PINS_QUERY_GetPins_author {
+export interface pin_author {
   __typename: "User";
   id: string;
   login: string;
   email: string;
 }
 
-export interface GET_PINS_QUERY_GetPins {
+export interface pin {
   __typename: "Pin";
   id: string;
   pinId: string;
@@ -28,10 +28,6 @@ export interface GET_PINS_QUERY_GetPins {
   placeType: string;
   center: number[];
   createdAt: string;
-  comments: (GET_PINS_QUERY_GetPins_comments | null)[] | null;
-  author: GET_PINS_QUERY_GetPins_author | null;
-}
-
-export interface GET_PINS_QUERY {
-  GetPins: (GET_PINS_QUERY_GetPins | null)[];
+  comments: (pin_comments | null)[] | null;
+  author: pin_author | null;
 }

@@ -24,18 +24,13 @@ const InnerBox = styled.div`
 export default function () {
 	const { id } = useParams()
 	const { data, error, loading } = useQuery(GET_PIN, {
-		variables: { input: { id } },
+		variables: { input: { pinId: id } },
 	})
 
 	if (loading) return <FullScreenLoader />
 	if (!data || !data.GetPin || error) return <Header as="h1">Not found</Header>
 
-	const {
-		image,
-		description,
-		title,
-		createdAt,
-	} = data.GetPin as GET_PINS_QUERY_GetPins
+	const { text, placeName, createdAt } = data.GetPin as GET_PINS_QUERY_GetPins
 
 	return (
 		<Box>
@@ -43,16 +38,15 @@ export default function () {
 				<InnerBox>
 					<Item.Group>
 						<Item>
-							<Item.Image size="medium" src={image} />
 							<Item.Content>
-								<Item.Header>{title}</Item.Header>
+								<Item.Header>{text}</Item.Header>
 								<Item.Meta>
 									<span className="price">
 										Created {intervalDuration(+createdAt)}
 									</span>
 								</Item.Meta>
 								<h4>Description:</h4>
-								<Item.Description>{description}</Item.Description>
+								<Item.Description>{placeName}</Item.Description>
 							</Item.Content>
 						</Item>
 					</Item.Group>

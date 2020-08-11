@@ -13,6 +13,7 @@ import Main from "components/Main"
 import { GET_CURRENT_USER_QUERY } from "./types/GET_CURRENT_USER_QUERY"
 import PinPage from "components/Pin/PinPage"
 import FullScreenLoader from "components/FullScreenLoader"
+import AllPinsPage from "components/Pin/AllPinsPage"
 
 interface Props {
 	data: GET_CURRENT_USER_QUERY
@@ -52,6 +53,12 @@ const Routes: React.FC<Props> = ({ data, refetch, loading }) => {
 					isLoggedIn={isLoggedIn}
 					refetch={refetch}
 					component={Main}
+					exact
+				/>
+				<ProtectedRoute
+					path={routes.ALL_PINS}
+					isLoggedIn={isLoggedIn}
+					component={AllPinsPage}
 					exact
 				/>
 				<ProtectedRoute

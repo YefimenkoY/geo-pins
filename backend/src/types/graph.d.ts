@@ -20,11 +20,11 @@ export type Comment = {
 };
 
 export type CreatePinInput = {
-  title: Scalars['String'];
-  description: Scalars['String'];
-  lat: Scalars['String'];
-  lon: Scalars['String'];
-  image: Scalars['String'];
+  pinId: Scalars['String'];
+  text: Scalars['String'];
+  placeName: Scalars['String'];
+  center: Array<Maybe<Scalars['Float']>>;
+  placeType: Scalars['String'];
 };
 
 export type DeletePinInput = {
@@ -32,7 +32,7 @@ export type DeletePinInput = {
 };
 
 export type GetPinInput = {
-  id: Scalars['String'];
+  pinId: Scalars['String'];
 };
 
 export type Mutation = {
@@ -65,13 +65,13 @@ export type MutationSignUpArgs = {
 
 export type Pin = {
   __typename?: 'Pin';
-  id?: Maybe<Scalars['ID']>;
-  title: Scalars['String'];
+  id: Scalars['String'];
+  pinId: Scalars['String'];
+  text: Scalars['String'];
   createdAt: Scalars['String'];
-  description: Scalars['String'];
-  image?: Maybe<Scalars['String']>;
-  lat: Scalars['String'];
-  lon: Scalars['String'];
+  placeName: Scalars['String'];
+  placeType: Scalars['String'];
+  center: Array<Scalars['Float']>;
   author?: Maybe<User>;
   comments?: Maybe<Array<Maybe<Comment>>>;
 };
@@ -199,8 +199,9 @@ export type ResolversTypes = {
   GetPinInput: GetPinInput;
   String: ResolverTypeWrapper<Scalars['String']>;
   Pin: ResolverTypeWrapper<Pin>;
-  ID: ResolverTypeWrapper<Scalars['ID']>;
+  Float: ResolverTypeWrapper<Scalars['Float']>;
   User: ResolverTypeWrapper<User>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
   Comment: ResolverTypeWrapper<Comment>;
   Mutation: ResolverTypeWrapper<{}>;
   CreatePinInput: CreatePinInput;
@@ -217,8 +218,9 @@ export type ResolversParentTypes = {
   GetPinInput: GetPinInput;
   String: Scalars['String'];
   Pin: Pin;
-  ID: Scalars['ID'];
+  Float: Scalars['Float'];
   User: User;
+  ID: Scalars['ID'];
   Comment: Comment;
   Mutation: {};
   CreatePinInput: CreatePinInput;
@@ -245,13 +247,13 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type PinResolvers<ContextType = any, ParentType extends ResolversParentTypes['Pin'] = ResolversParentTypes['Pin']> = {
-  id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
-  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  pinId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  text?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  lat?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  lon?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  placeName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  placeType?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  center?: Resolver<Array<ResolversTypes['Float']>, ParentType, ContextType>;
   author?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   comments?: Resolver<Maybe<Array<Maybe<ResolversTypes['Comment']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;

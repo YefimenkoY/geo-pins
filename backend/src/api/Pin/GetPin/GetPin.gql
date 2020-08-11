@@ -1,5 +1,5 @@
 input GetPinInput {
-	id: String!
+	pinId: String!
 }
 
 type Query {

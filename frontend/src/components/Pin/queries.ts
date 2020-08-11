@@ -3,11 +3,11 @@ import { gql } from "@apollo/client"
 export const pinFragment = gql`
 	fragment pin on Pin {
 		id
-		description
-		title
-		lat
-		lon
-		image
+		pinId
+		text
+		placeName
+		placeType
+		center
 		createdAt
 		comments {
 			text
@@ -32,17 +32,26 @@ export const DELETE_PIN = gql`
 export const GET_PIN = gql`
 	query GET_PIN($input: GetPinInput!) {
 		GetPin(input: $input) {
-			id
-			title
-			createdAt
-			description
-			image
-			lat
-			lon
-			author {
-				id
-				login
-			}
+			...pin
 		}
 	}
+	${pinFragment}
+`
+
+export const GET_PINS_QUERY = gql`
+	query GET_PINS_QUERY {
+		GetPins {
+			...pin
+		}
+	}
+	${pinFragment}
+`
+
+export const CREATE_PIN = gql`
+	mutation CREATE_PIN($input: CreatePinInput!) {
+		CreatePin(input: $input) {
+			...pin
+		}
+	}
+	${pinFragment}
 `

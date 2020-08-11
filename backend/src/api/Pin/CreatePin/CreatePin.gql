@@ -1,11 +1,11 @@
 input CreatePinInput {
-  title: String!
-  description: String!
-  lat: String!
-  lon: String!
-  image: String!
+	pinId: String!
+	text: String!
+	placeName: String!
+	center: [Float]!
+	placeType: String!
 }
 
 type Mutation {
-  CreatePin(input: CreatePinInput!): Pin
+	CreatePin(input: CreatePinInput!): Pin
 }
