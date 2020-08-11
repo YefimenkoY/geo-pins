@@ -67,8 +67,14 @@ export default function ({ client }: Props) {
 					<Icon name="map marker alternate" size="big" color="red" />
 					<h1>Geo Pins</h1>
 				</LogoLink>
-				<Menu.Item name="home" active={true} onClick={() => {}} />
 				<Menu.Menu position="right">
+					<Menu.Item
+						name="Saved"
+						as={Link}
+						icon="save"
+						active={pathname.includes(routes.ALL_PINS)}
+						to={routes.ALL_PINS}
+					/>
 					{currentUser && (
 						<Dropdown disabled={pathname !== routes.ROOT} item text="Map style">
 							<Dropdown.Menu>

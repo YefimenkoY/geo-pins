@@ -33,7 +33,7 @@
 		"lint:fix": "node_modules/.bin/eslint --quiet --fix -c .eslintrc.js --ext .tsx --ext .js src/",
 		"test": "react-app-rewired test",
 		"eject": "react-app-rewired eject",
-		"pretypes": "apollo schema:download --endpoint=http://localhost:4000/graphql",
+		"pretypes": "apollo schema:download --endpoint=http://localhost:5000/graphql",
 		"types": "apollo codegen:generate --outputFlat src/types --localSchemaFile=schema.json --target=typescript  --tagName=gql "
 	},
 	"eslintConfig": {

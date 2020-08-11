@@ -1,11 +1,9 @@
 import React from "react"
 import MapBox, { Marker, Popup } from "react-map-gl"
 import { Icon } from "semantic-ui-react"
-import { useQuery } from "@apollo/client"
 import styled from "styled-components"
 import _ from "lodash"
 
-import { GET_PINS_QUERY } from "./queries"
 import useMapContext, { DEFAULT_ZOOM } from "context/map"
 import layoutContext from "context/layout"
 import PinView from "../Pin/PinView"
@@ -30,18 +28,14 @@ const Map = () => {
 		setMapPosition,
 		setCurrentPin,
 		currentPin,
-		pins,
-		setPins,
 		mapStyle,
 		features,
 	} = useMapContext()
-	const { headerHeight } = layoutContext()
+	const { headerHeight, setSidebarOpen } = layoutContext()
 
-	useQuery(GET_PINS_QUERY, {
-		onCompleted(data) {
-			setPins(data.GetPins)
-		},
-	})
+	React.useEffect(() => {
+		setSidebarOpen(true)
+	}, [])
 
 	const handleMapClick = ({ lngLat: [longitude = 0, latitude = 0] }) => {
 		setCurrentPosition({

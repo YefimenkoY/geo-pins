@@ -3,23 +3,25 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { GetPinInput } from "./globalTypes";
+
 // ====================================================
-// GraphQL query operation: GET_PINS_QUERY
+// GraphQL query operation: GET_PIN
 // ====================================================
 
-export interface GET_PINS_QUERY_GetPins_comments {
+export interface GET_PIN_GetPin_comments {
   __typename: "Comment";
   text: string;
 }
 
-export interface GET_PINS_QUERY_GetPins_author {
+export interface GET_PIN_GetPin_author {
   __typename: "User";
   id: string;
   login: string;
   email: string;
 }
 
-export interface GET_PINS_QUERY_GetPins {
+export interface GET_PIN_GetPin {
   __typename: "Pin";
   id: string;
   pinId: string;
@@ -28,10 +30,14 @@ export interface GET_PINS_QUERY_GetPins {
   placeType: string;
   center: number[];
   createdAt: string;
-  comments: (GET_PINS_QUERY_GetPins_comments | null)[] | null;
-  author: GET_PINS_QUERY_GetPins_author | null;
+  comments: (GET_PIN_GetPin_comments | null)[] | null;
+  author: GET_PIN_GetPin_author | null;
 }
 
-export interface GET_PINS_QUERY {
-  GetPins: (GET_PINS_QUERY_GetPins | null)[];
+export interface GET_PIN {
+  GetPin: GET_PIN_GetPin | null;
+}
+
+export interface GET_PINVariables {
+  input: GetPinInput;
 }

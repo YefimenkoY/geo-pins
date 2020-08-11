@@ -1,7 +1,11 @@
-import React from "react";
+import React from "react"
 
-import { Map } from "./Map";
+import { Map } from "./Map"
+import usePin from "components/Pin/usePin"
 
-const Main = () => <Map />;
+const Main = () => {
+	usePin()
+	return <Map />
+}
 
-export default Main;
+export default Main

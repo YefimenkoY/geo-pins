@@ -8,7 +8,7 @@ const resolvers: Resolvers = {
 		DeletePin: authenticated(
 			async (_, args: MutationDeletePinArgs, ctx): Promise<Pin[]> => {
 				try {
-					await Pin.delete({ id: +args.input.pinId })
+					await Pin.delete({ pinId: args.input.pinId })
 					return Pin.find({
 						where: {
 							author: ctx.currentUser.id,

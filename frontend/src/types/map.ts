@@ -9,11 +9,13 @@ export enum FeatureType {
 	poi = "poi",
 }
 
+export type Center = [number, number]
+
 export interface Feature {
 	id: string
 	text: string
 	place_name: string
-	center: [number, number]
+	center: Center
 	place_type: [FeatureType]
 }
 

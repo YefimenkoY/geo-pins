@@ -12,6 +12,11 @@ const Box = styled.div`
 	position: relative;
 	overflow: hidden;
 	position: relative;
+
+	.ui.wide.left.sidebar,
+	.ui.wide.right.sidebar {
+		max-width: 300px !important;
+	}
 `
 
 interface Props {

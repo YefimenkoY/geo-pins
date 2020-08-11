@@ -1,12 +1,23 @@
 import React from "react"
-import { Segment, Dropdown, Input, List, Label } from "semantic-ui-react"
+import {
+	Segment,
+	Dropdown,
+	Input,
+	List,
+	Label,
+	Button,
+} from "semantic-ui-react"
 import { debounce } from "lodash"
 import styled, { css, StyledFunction } from "styled-components"
+import { useLocation } from "react-router-dom"
 
 import mapContext from "context/map"
+import layoutContext from "context/layout"
 import { getFeatures } from "../../api/map"
 import { FeatureType, Color, Feature } from "types/map"
 import { featureColors } from "../../constants/common"
+import useWindowSize from "hooks/useWindowSize"
+import { GET_PINS_QUERY_GetPins } from "types/GET_PINS_QUERY"
 
 const options = Object.keys(FeatureType)
 	.map(f => ({
@@ -20,6 +31,7 @@ const Content = styled(List.Content)`
 	display: flex;
 	flex-direction: column;
 	cursor: pointer;
+	width: 100%;
 
 	.header,
 	.description {
@@ -35,15 +47,27 @@ const Content = styled(List.Content)`
 `
 
 const SidebarContent = () => {
+	const { setSidebarOpen } = layoutContext()
+
 	const [feature, setFeature] = React.useState("")
 	const [loading, setLoading] = React.useState(false)
 	const [featureType, setFeatureType] = React.useState<FeatureType | "">("")
+	const { width } = useWindowSize()
+	const { pathname } = useLocation()
+
+	React.useEffect(() => {
+		if (pathname !== "/") {
+			return setSidebarOpen(false)
+		}
+	}, [pathname])
+
 	const {
 		features,
 		setFeatures,
 		setMapPosition,
 		setCurrentPin,
 		currentPin,
+		pins,
 	} = mapContext()
 
 	React.useEffect(() => {
@@ -61,6 +85,7 @@ const SidebarContent = () => {
 			<Input
 				value={feature}
 				loading={loading}
+				size="mini"
 				onChange={e => setFeature(e.target.value)}
 				action={
 					<Dropdown
@@ -68,9 +93,10 @@ const SidebarContent = () => {
 						basic
 						loading={loading}
 						floating
-						placeholder="location type"
+						placeholder="all"
 						onChange={(e, { value }) => setFeatureType(value as FeatureType)}
 						options={options}
+						defaultSelectedLabel="all"
 					/>
 				}
 				icon="search"
@@ -86,6 +112,10 @@ const SidebarContent = () => {
 						place_type: [d],
 						center: [lon, lat],
 					} = f
+					const isCurrent = pins.some(
+						({ pinId }: GET_PINS_QUERY_GetPins) => pinId === id,
+					)
+
 					return (
 						<List.Item
 							key={id}
@@ -99,19 +129,27 @@ const SidebarContent = () => {
 							}}
 						>
 							<Content active={currentPin !== null && currentPin.id === id}>
-								<List.Header as="h3">
-									{" "}
+								<List.Header as="h5">
+									{isCurrent && <Label icon="save" horizontal color="green" />}
 									<Label color={featureColors[d] as Color} horizontal>
 										{d}
 									</Label>
 									{text}
 								</List.Header>
-								<List.Description as="p">{place_name}</List.Description>
+								{width >= 768 && (
+									<List.Description as="span">{place_name}</List.Description>
+								)}
 							</Content>
 						</List.Item>
 					)
 				})}
 			</List>
+			<Button
+				onClick={() => setSidebarOpen(false)}
+				circular
+				icon="angle right"
+				color="red"
+			/>
 		</Segment>
 	)
 }

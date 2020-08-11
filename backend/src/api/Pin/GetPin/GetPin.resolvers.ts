@@ -9,7 +9,7 @@ const resolvers: Resolvers = {
 			async (_, args: QueryGetPinArgs, ctx): Promise<Pin> => {
 				try {
 					return await Pin.findOne({
-						where: { id: args.input.id, author: ctx.currentUser },
+						where: { pinId: args.input.pinId, author: ctx.currentUser },
 						relations: ["author"],
 					})
 				} catch ({ message }) {

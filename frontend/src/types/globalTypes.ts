@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 //==============================================================
@@ -7,14 +8,18 @@
 //==============================================================
 
 export interface CreatePinInput {
-  title: string;
-  description: string;
-  lat: string;
-  lon: string;
-  image: string;
+  pinId: string;
+  text: string;
+  placeName: string;
+  center: (number | null)[];
+  placeType: string;
 }
 
 export interface DeletePinInput {
+  pinId: string;
+}
+
+export interface GetPinInput {
   pinId: string;
 }
 

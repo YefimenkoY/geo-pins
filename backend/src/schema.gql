@@ -1,9 +1,9 @@
 input CreatePinInput {
-  title: String!
-  description: String!
-  lat: String!
-  lon: String!
-  image: String!
+  pinId: String!
+  text: String!
+  placeName: String!
+  center: [Float]!
+  placeType: String!
 }
 
 type Mutation {
@@ -18,7 +18,7 @@ input DeletePinInput {
 }
 
 input GetPinInput {
-  id: String!
+  pinId: String!
 }
 
 type Query {
@@ -35,13 +35,13 @@ type Comment {
 }
 
 type Pin {
-  id: ID
-  title: String!
+  id: String!
+  pinId: String!
+  text: String!
   createdAt: String!
-  description: String!
-  image: String
-  lat: String!
-  lon: String!
+  placeName: String!
+  placeType: String!
+  center: [Float!]!
   author: User
   comments: [Comment]
 }
