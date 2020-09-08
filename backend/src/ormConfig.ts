@@ -6,10 +6,10 @@ const connectionOptions: ConnectionOptions = {
 	synchronize: true,
 	logging: false,
 	entities: ["entities/**/*.*"],
-	host: process.env.RDS_HOSTNAME,
-	port: +process.env.RDS_PORT,
-	username: process.env.RDS_USERNAME,
-	password: process.env.RDS_PASSWORD,
+	host: process.env.DB_HOSTNAME,
+	port: +process.env.DB_PORT,
+	username: process.env.DB_USERNAME,
+	password: process.env.DB_PASSWORD,
 }
 
 export default connectionOptions

@@ -18,10 +18,10 @@ services:
       - ./backend/package.json:/usr/app/package.json
       - ./backend/yarn.lock:/usr/app/yarn.lock
     environment:
-      - RDS_HOSTNAME=db
-      - RDS_PORT=5432
-      - RDS_USERNAME=postgres
-      - RDS_PASSWORD=test
+      - DB_HOSTNAME=db
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=test
       - SECRET=sdfsdf3ewfs
   frontend:
     stdin_open: true
