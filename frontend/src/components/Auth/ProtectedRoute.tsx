@@ -6,7 +6,7 @@ import { routes } from "../../constants/routes"
 interface Props<P> extends RouteProps {
 	component: JSXElementConstructor<P>
 	isLoggedIn: boolean
-	refetch?: any
+	refetch?: () => void
 }
 
 const ProtectedRoute: React.FC<Props<any>> = ({

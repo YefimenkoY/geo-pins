@@ -1,13 +1,13 @@
 import React from "react"
-import styled, { StyledComponent } from "styled-components"
+import styled from "styled-components"
 import { Button, Dropdown, Menu as _Menu, Icon } from "semantic-ui-react"
 import { Link, useLocation } from "react-router-dom"
 import { ApolloClient } from "@apollo/client"
 
-import useMapContext from "context/map"
 import { routes } from "../constants/routes"
-import useCurrentUserContext from "context/user"
-import layoutContext from "context/layout"
+import { useMapContext } from "context/map"
+import { useUserContext } from "context/user"
+import { useLayoutContext } from "context/layout"
 import { MapStyle } from "../constants/common"
 import useWindowSize from "hooks/useWindowSize"
 
@@ -20,7 +20,7 @@ const Menu = styled(_Menu)`
 
 `
 
-const LogoLink: StyledComponent<any, any> = styled(Link)`
+const LogoLink = styled(Link)`
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
@@ -39,16 +39,16 @@ const LogoLink: StyledComponent<any, any> = styled(Link)`
 `
 
 interface Props {
-	client: ApolloClient<any>
+	client: ApolloClient<unknown>
 }
 
 const items = [MapStyle.street, MapStyle.light, MapStyle.dark, MapStyle.outdors]
 
-export default function ({ client }: Props) {
+export default function ({ client }: Props): React.ReactElement {
 	const { pathname } = useLocation()
-	const [currentUser, setCurrentUser] = useCurrentUserContext()
+	const [currentUser, setCurrentUser] = useUserContext()
 	const { reset, setMapStyle, mapStyle } = useMapContext()
-	const { setHeaderHeight, headerHeight } = layoutContext()
+	const { setHeaderHeight } = useLayoutContext()
 	const headerRef = React.useRef<HTMLDivElement>(null)
 	const { width, height } = useWindowSize()
 
@@ -118,7 +118,7 @@ export default function ({ client }: Props) {
 								onClick={async () => {
 									reset()
 									await client.resetStore()
-									setCurrentUser(null)
+									setCurrentUser(undefined)
 									localStorage.removeItem("token")
 									window.location.reload()
 								}}

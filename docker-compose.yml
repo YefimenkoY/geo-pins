@@ -35,5 +35,6 @@ services:
       - ./frontend/src:/usr/app/src
       - ./frontend/package.json:/usr/app/package.json
       - ./frontend/yarn.lock:/usr/app/yarn.lock
+      - ./frontend/tsconfig.json:/usr/app/tsconfig.json
     environment:
       - REACT_APP_MAP_BOX_TOKEN=pk.eyJ1IjoieXJyOTIiLCJhIjoiY2swamV2eTRrMDk0bTNucG5xdGE3YnFmYiJ9.wVtCsbkHfBmgj1mhwu8_1g

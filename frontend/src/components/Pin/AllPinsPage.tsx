@@ -7,11 +7,11 @@ import { GET_PINS_QUERY_GetPins } from "types/GET_PINS_QUERY"
 import { featureColors } from "../../constants/common"
 import { Color, FeatureType, Center } from "types/map"
 import { routes } from "constants/routes"
-import mapContext from "context/map"
+import { useMapContext } from "context/map"
 
-export default function AllPinsPage() {
+export default function AllPinsPage(): React.ReactElement {
 	const { loading, error, data } = usePin()
-	const { setCurrentPin } = mapContext()
+	const { setCurrentPin } = useMapContext()
 
 	if (loading) return <Loader active />
 

@@ -2,10 +2,9 @@ import React from "react"
 import MapBox, { Marker, Popup } from "react-map-gl"
 import { Icon } from "semantic-ui-react"
 import styled from "styled-components"
-import _ from "lodash"
 
-import useMapContext, { DEFAULT_ZOOM } from "context/map"
-import layoutContext from "context/layout"
+import { useMapContext, DEFAULT_ZOOM } from "context/map"
+import { useLayoutContext } from "context/layout"
 import PinView from "../Pin/PinView"
 import { Feature, Color } from "types/map"
 
@@ -20,7 +19,7 @@ const PinIcon = styled(Icon)`
 	}
 `
 
-const Map = () => {
+const Map = (): React.ReactElement => {
 	const {
 		currentPosition,
 		setCurrentPosition,
@@ -31,7 +30,7 @@ const Map = () => {
 		mapStyle,
 		features,
 	} = useMapContext()
-	const { headerHeight, setSidebarOpen } = layoutContext()
+	const { headerHeight, setSidebarOpen } = useLayoutContext()
 
 	React.useEffect(() => {
 		setSidebarOpen(true)
@@ -43,7 +42,7 @@ const Map = () => {
 			longitude,
 			zoom: DEFAULT_ZOOM,
 		})
-		setCurrentPin(null)
+		setCurrentPin(undefined)
 	}
 
 	return (
@@ -54,9 +53,15 @@ const Map = () => {
 			onClick={handleMapClick}
 			{...mapPosition}
 			mapboxApiAccessToken="pk.eyJ1IjoieXJyOTIiLCJhIjoiY2swamV2eTRrMDk0bTNucG5xdGE3YnFmYiJ9.wVtCsbkHfBmgj1mhwu8_1g"
-			onViewportChange={({ longitude, latitude, zoom }) =>
-				setMapPosition({ longitude, latitude, zoom })
-			}
+			onViewportChange={({
+				longitude,
+				latitude,
+				zoom,
+			}: {
+				longitude: number
+				latitude: number
+				zoom: number
+			}) => setMapPosition({ longitude, latitude, zoom })}
 		>
 			{currentPosition && (
 				<Marker {...currentPosition} offsetLeft={-20} offsetTop={-35}>
@@ -99,7 +104,7 @@ const Map = () => {
 					longitude={currentPin.center[0]}
 					closeButton
 					closeOnClick={false}
-					onClose={() => setCurrentPin(null)}
+					onClose={() => setCurrentPin(undefined)}
 					anchor="top"
 				>
 					<PinView />

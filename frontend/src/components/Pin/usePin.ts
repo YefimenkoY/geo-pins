@@ -1,17 +1,17 @@
-import React from "react"
-import { useQuery } from "@apollo/client"
+import { GET_PINS_QUERY as GET_PINS_QUERY_TYPE } from "types/GET_PINS_QUERY"
+import { OperationVariables, QueryResult, useQuery } from "@apollo/client"
 
-import mapContext from "context/map"
+import { useMapContext } from "context/map"
 import { GET_PINS_QUERY } from "components/Pin/queries"
 
-export default () => {
-	const { setPins } = mapContext()
-	const { data, ...meta } = useQuery(GET_PINS_QUERY)
+export default (): QueryResult<GET_PINS_QUERY_TYPE, OperationVariables> => {
+	const { setPins } = useMapContext()
+	const { data, ...meta } = useQuery<GET_PINS_QUERY_TYPE>(GET_PINS_QUERY)
 
-	if (!meta.loading && !meta.error && data) {
+	if (!meta.loading && !meta.error && data && data.GetPins) {
 		setPins(data.GetPins)
 	}
-console.log(meta)
+
 	return {
 		data,
 		...meta,

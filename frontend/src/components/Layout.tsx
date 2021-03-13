@@ -5,7 +5,7 @@ import { Menu, Sidebar } from "semantic-ui-react"
 
 import Header from "./Header"
 import SidebarContent from "./Sidebar"
-import layoutContext from "context/layout"
+import { useLayoutContext } from "context/layout"
 
 const Box = styled.div`
 	width: 100vw;
@@ -20,12 +20,12 @@ const Box = styled.div`
 `
 
 interface Props {
-	client: ApolloClient<any>
-	children: any
+	client: ApolloClient<unknown>
+	children: React.ReactNode
 }
 
 const Layout: React.FC<Props> = ({ children, client }) => {
-	const { sidebarOpen } = layoutContext()
+	const { sidebarOpen } = useLayoutContext()
 
 	return (
 		<Box>

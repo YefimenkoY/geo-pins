@@ -6,7 +6,7 @@ import Root from "./Root"
 import GlobalStyles from "../styles/global-styles"
 import "semantic-ui-css/semantic.min.css"
 
-const App: React.FC = () => (
+export default (): React.ReactElement => (
 	<ProvidersWrapper>
 		<Router>
 			<GlobalStyles />
@@ -14,5 +14,3 @@ const App: React.FC = () => (
 		</Router>
 	</ProvidersWrapper>
 )
-
-export default App

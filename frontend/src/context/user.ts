@@ -1,7 +1,10 @@
-import { useState } from "react";
-import createUseContext from "constate";
-import { GET_CURRENT_USER_QUERY_CurrentUser } from "../types/GET_CURRENT_USER_QUERY";
+import { useState } from "react"
+import constate from "constate"
+import { GET_CURRENT_USER_QUERY_CurrentUser } from "../types/GET_CURRENT_USER_QUERY"
+import { Maybe } from "types/common"
 
-export default createUseContext(() =>
-  useState<GET_CURRENT_USER_QUERY_CurrentUser | null>(null)
-);
+const [Provider, useUserContext] = constate(() =>
+	useState<Maybe<GET_CURRENT_USER_QUERY_CurrentUser>>(),
+)
+
+export { Provider, useUserContext }

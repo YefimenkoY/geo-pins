@@ -1,9 +1,9 @@
 import { useState } from "react"
-import createUseContext from "constate"
+import constate from "constate"
 
-export default createUseContext(() => {
-	const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
-	const [headerHeight, setHeaderHeight] = useState<number>(0)
+const [Provider, useLayoutContext] = constate(() => {
+	const [sidebarOpen, setSidebarOpen] = useState(false)
+	const [headerHeight, setHeaderHeight] = useState(0)
 
 	return {
 		sidebarOpen,
@@ -12,3 +12,5 @@ export default createUseContext(() => {
 		setHeaderHeight,
 	}
 })
+
+export { useLayoutContext, Provider }

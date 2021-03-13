@@ -6,7 +6,7 @@ import { get } from "lodash"
 import Layout from "components/Layout"
 import ProtectedRoute from "components/Auth/ProtectedRoute"
 import { routes } from "./constants/routes"
-import useCurrentUserContext from "context/user"
+import { useUserContext } from "context/user"
 import SignIn from "components/Auth/SignIn"
 import SignUp from "components/Auth/SignUp"
 import Main from "components/Main"
@@ -17,16 +17,16 @@ import AllPinsPage from "components/Pin/AllPinsPage"
 
 interface Props {
 	data: GET_CURRENT_USER_QUERY
-	refetch: () => any
+	refetch: () => void
 	loading: boolean
 }
 
 const Routes: React.FC<Props> = ({ data, refetch, loading }) => {
 	const client = useApolloClient()
-	const user = get(data, "CurrentUser", null)
+	const user = get(data, "CurrentUser")
 	const isLoggedIn = Boolean(user)
 
-	const [currentUser, setCurrentUser] = useCurrentUserContext()
+	const [, setCurrentUser] = useUserContext()
 
 	React.useEffect(() => {
 		if (user) setCurrentUser(user)
@@ -47,7 +47,7 @@ const Routes: React.FC<Props> = ({ data, refetch, loading }) => {
 						)
 					}
 				/>
-				<Route path={routes.SIGN_UP} refetch={refetch} component={SignUp} />
+				<Route path={routes.SIGN_UP} component={SignUp} />
 				<ProtectedRoute
 					path={routes.ROOT}
 					isLoggedIn={isLoggedIn}
