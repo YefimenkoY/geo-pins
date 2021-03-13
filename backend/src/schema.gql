@@ -23,7 +23,7 @@ input GetPinInput {
 
 type Query {
   GetPin(input: GetPinInput!): Pin
-  GetPins: [Pin]!
+  GetPins: [Pin!]!
   CurrentUser: User
 }
 

@@ -14,12 +14,7 @@ import { withRouter, RouteComponentProps } from "react-router-dom"
 
 import { routes } from "../../constants/routes"
 import { SIGN_IN_MUTATION } from "./queries"
-
-// const Grid: StyledComponent<any, any> = styled(_Grid)`
-//   && {
-//     height: 100%;
-//   }
-// `;
+import { SIGN_IN_MUTATION as SIGN_IN_MUTATION_TYPE } from "types/SIGN_IN_MUTATION"
 
 const FormBox = styled.div`
 	display: flex;
@@ -32,14 +27,14 @@ const FormBox = styled.div`
 	}
 `
 
-interface Props extends RouteComponentProps {
-	refetch: any
+type Props = RouteComponentProps & {
+	refetch: () => void
 }
 
 const SignIn: React.FC<Props> = ({ history, refetch }) => {
 	const [logIn, { loading, error }] = useMutation(SIGN_IN_MUTATION, {
-		onCompleted(data) {
-			if (data) {
+		onCompleted(data: SIGN_IN_MUTATION_TYPE) {
+			if (data && data.SignIn.token) {
 				localStorage.setItem("token", data.SignIn.token)
 				setTimeout(() => {
 					refetch()
@@ -47,7 +42,7 @@ const SignIn: React.FC<Props> = ({ history, refetch }) => {
 				}, 1000)
 			}
 		},
-		onError(e) {
+		onError() {
 			localStorage.setItem("token", "")
 			refetch()
 		},

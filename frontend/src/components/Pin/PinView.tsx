@@ -3,18 +3,18 @@ import { Card, Button } from "semantic-ui-react"
 import { useMutation } from "@apollo/client"
 import { Link } from "react-router-dom"
 
-import mapContext from "context/map"
+import { useMapContext } from "context/map"
 import { DELETE_PIN, CREATE_PIN } from "./queries"
 import { GET_PINS_QUERY_GetPins } from "types/GET_PINS_QUERY"
 import usePin from "components/Pin/usePin"
 
-export default () => {
-	const { currentPin, setCurrentPin, setPins, pins } = mapContext()
+export default (): React.ReactElement | null => {
+	const { currentPin, setCurrentPin, setPins, pins } = useMapContext()
 	const { refetch } = usePin()
 	const [deletePin, { loading }] = useMutation(DELETE_PIN, {
 		onCompleted(data) {
 			refetch && refetch()
-			setCurrentPin(null)
+			setCurrentPin(undefined)
 			setPins(data.DeletePin)
 		},
 	})

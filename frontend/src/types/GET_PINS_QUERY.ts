@@ -33,5 +33,5 @@ export interface GET_PINS_QUERY_GetPins {
 }
 
 export interface GET_PINS_QUERY {
-  GetPins: (GET_PINS_QUERY_GetPins | null)[];
+  GetPins: GET_PINS_QUERY_GetPins[];
 }

@@ -79,7 +79,7 @@ export type Pin = {
 export type Query = {
   __typename?: 'Query';
   GetPin?: Maybe<Pin>;
-  GetPins: Array<Maybe<Pin>>;
+  GetPins: Array<Pin>;
   CurrentUser?: Maybe<User>;
 };
 
@@ -261,7 +261,7 @@ export type PinResolvers<ContextType = any, ParentType extends ResolversParentTy
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   GetPin?: Resolver<Maybe<ResolversTypes['Pin']>, ParentType, ContextType, RequireFields<QueryGetPinArgs, 'input'>>;
-  GetPins?: Resolver<Array<Maybe<ResolversTypes['Pin']>>, ParentType, ContextType>;
+  GetPins?: Resolver<Array<ResolversTypes['Pin']>, ParentType, ContextType>;
   CurrentUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
 };
 

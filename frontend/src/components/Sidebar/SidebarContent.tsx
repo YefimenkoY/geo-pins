@@ -8,11 +8,11 @@ import {
 	Button,
 } from "semantic-ui-react"
 import { debounce } from "lodash"
-import styled, { css, StyledFunction } from "styled-components"
+import styled, { css } from "styled-components"
 import { useLocation } from "react-router-dom"
 
-import mapContext from "context/map"
-import layoutContext from "context/layout"
+import { useMapContext } from "context/map"
+import { useLayoutContext } from "context/layout"
 import { getFeatures } from "../../api/map"
 import { FeatureType, Color, Feature } from "types/map"
 import { featureColors } from "../../constants/common"
@@ -46,8 +46,8 @@ const Content = styled(List.Content)`
 		`}
 `
 
-const SidebarContent = () => {
-	const { setSidebarOpen } = layoutContext()
+const SidebarContent = (): React.ReactElement => {
+	const { setSidebarOpen } = useLayoutContext()
 
 	const [feature, setFeature] = React.useState("")
 	const [loading, setLoading] = React.useState(false)
@@ -68,7 +68,7 @@ const SidebarContent = () => {
 		setCurrentPin,
 		currentPin,
 		pins,
-	} = mapContext()
+	} = useMapContext()
 
 	React.useEffect(() => {
 		const search = debounce(async function () {
@@ -128,7 +128,9 @@ const SidebarContent = () => {
 								setCurrentPin(f)
 							}}
 						>
-							<Content active={currentPin !== null && currentPin.id === id}>
+							<Content
+								active={currentPin !== undefined && currentPin.id === id}
+							>
 								<List.Header as="h5">
 									{isCurrent && <Label icon="save" horizontal color="green" />}
 									<Label color={featureColors[d] as Color} horizontal>

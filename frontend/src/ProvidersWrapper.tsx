@@ -2,28 +2,24 @@ import React from "react"
 import { ApolloProvider } from "@apollo/client"
 import { ThemeProvider } from "styled-components"
 
-import useMapContext from "context/map"
-import useCurrentUserContext from "context/user"
-import layoutContext from "./context/layout"
+import { Provider as MapProvider } from "context/map"
+import { Provider as UserProvider } from "context/user"
+import { Provider as LayoutProvider } from "context/layout"
 import client from "./client"
 import theme from "./constants/theme"
 
 interface Props {
-	children: any
+	children: React.ReactChild
 }
-
-const [CurrentUserProvider] = useCurrentUserContext
-const [MapProvider] = useMapContext
-const [LayoutProvider] = layoutContext
 
 const ProvidersWrapper: React.FC<Props> = ({ children }) => (
 	<ApolloProvider client={client}>
 		<ThemeProvider theme={theme}>
-			<CurrentUserProvider>
+			<UserProvider>
 				<MapProvider>
 					<LayoutProvider>{children}</LayoutProvider>
 				</MapProvider>
-			</CurrentUserProvider>
+			</UserProvider>
 		</ThemeProvider>
 	</ApolloProvider>
 )

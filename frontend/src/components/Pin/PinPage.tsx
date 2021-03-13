@@ -21,10 +21,10 @@ const InnerBox = styled.div`
 	padding: 10px 0;
 `
 
-export default function () {
-	const { id } = useParams()
+export default function (): React.ReactElement {
+	const params: { id: string } = useParams()
 	const { data, error, loading } = useQuery(GET_PIN, {
-		variables: { input: { pinId: id } },
+		variables: { input: { pinId: params.id } },
 	})
 
 	if (loading) return <FullScreenLoader />

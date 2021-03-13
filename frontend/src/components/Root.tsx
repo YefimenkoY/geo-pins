@@ -3,19 +3,19 @@ import { useLazyQuery, NetworkStatus } from "@apollo/client"
 
 import Routes from "../routes"
 import { GET_CURRENT_USER_QUERY } from "./Auth/queries"
-import useCurrentUserContext from "context/user"
-import useMapContext from "context/map"
-import layoutContext from "context/layout"
+import { useMapContext } from "context/map"
+import { useUserContext } from "context/user"
+import { useLayoutContext } from "context/layout"
 import { useLocation } from "react-router-dom"
 
-export default () => {
+export default (): React.ReactElement => {
 	const { pathname } = useLocation()
 	const [getUser, { loading, data, refetch, networkStatus }] = useLazyQuery(
 		GET_CURRENT_USER_QUERY,
 	)
-	const [currentUser] = useCurrentUserContext()
+	const [currentUser] = useUserContext()
 	const { currentPosition } = useMapContext()
-	const { setSidebarOpen } = layoutContext()
+	const { setSidebarOpen } = useLayoutContext()
 
 	React.useEffect(() => {
 		if (pathname !== "/") {

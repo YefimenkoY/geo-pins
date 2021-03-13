@@ -24,7 +24,7 @@ const FormBox = styled.div`
 	align-items: center;
 `
 
-const SignUp: React.FC = () => {
+export default (): React.ReactElement => {
 	const [login, setLogin] = useState("")
 	const [email, setEmail] = useState("")
 	const [password, setPasword] = useState("")
@@ -132,5 +132,3 @@ const SignUp: React.FC = () => {
 		</Container>
 	)
 }
-
-export default SignUp
