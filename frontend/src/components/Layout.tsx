@@ -22,14 +22,15 @@ const Box = styled.div`
 interface Props {
 	client: ApolloClient<unknown>
 	children: React.ReactNode
+	isLoggedIn: boolean
 }
 
-const Layout: React.FC<Props> = ({ children, client }) => {
+const Layout: React.FC<Props> = ({ children, ...p }) => {
 	const { sidebarOpen } = useLayoutContext()
 
 	return (
 		<Box>
-			<Header client={client} />
+			<Header {...p} />
 			<Sidebar.Pushable>
 				<Sidebar
 					as={Menu}
@@ -40,7 +41,7 @@ const Layout: React.FC<Props> = ({ children, client }) => {
 					vertical
 					visible={sidebarOpen}
 				>
-					<SidebarContent />
+					<SidebarContent isLoggedIn={p.isLoggedIn} />
 				</Sidebar>
 				<Sidebar.Pusher>{children}</Sidebar.Pusher>
 			</Sidebar.Pushable>

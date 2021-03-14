@@ -6,7 +6,6 @@ import { ApolloClient } from "@apollo/client"
 
 import { routes } from "../constants/routes"
 import { useMapContext } from "context/map"
-import { useUserContext } from "context/user"
 import { useLayoutContext } from "context/layout"
 import { MapStyle } from "../constants/common"
 import useWindowSize from "hooks/useWindowSize"
@@ -40,13 +39,13 @@ const LogoLink = styled(Link)`
 
 interface Props {
 	client: ApolloClient<unknown>
+	isLoggedIn: boolean
 }
 
 const items = [MapStyle.street, MapStyle.light, MapStyle.dark, MapStyle.outdors]
 
-export default function ({ client }: Props): React.ReactElement {
+export default function ({ client, isLoggedIn }: Props): React.ReactElement {
 	const { pathname } = useLocation()
-	const [currentUser, setCurrentUser] = useUserContext()
 	const { reset, setMapStyle, mapStyle } = useMapContext()
 	const { setHeaderHeight } = useLayoutContext()
 	const headerRef = React.useRef<HTMLDivElement>(null)
@@ -75,7 +74,7 @@ export default function ({ client }: Props): React.ReactElement {
 						active={pathname.includes(routes.ALL_PINS)}
 						to={routes.ALL_PINS}
 					/>
-					{currentUser && (
+					{isLoggedIn && (
 						<Dropdown disabled={pathname !== routes.ROOT} item text="Map style">
 							<Dropdown.Menu>
 								{items.map((e: MapStyle) => (
@@ -91,7 +90,7 @@ export default function ({ client }: Props): React.ReactElement {
 						</Dropdown>
 					)}
 					<Menu.Item>
-						{!currentUser ? (
+						{!isLoggedIn ? (
 							<>
 								<Button.Group>
 									<Button
@@ -118,7 +117,6 @@ export default function ({ client }: Props): React.ReactElement {
 								onClick={async () => {
 									reset()
 									await client.resetStore()
-									setCurrentUser(undefined)
 									localStorage.removeItem("token")
 									window.location.reload()
 								}}
