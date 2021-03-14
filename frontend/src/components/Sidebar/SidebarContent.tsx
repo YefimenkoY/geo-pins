@@ -96,7 +96,6 @@ const SidebarContent = (): React.ReactElement => {
 						placeholder="all"
 						onChange={(e, { value }) => setFeatureType(value as FeatureType)}
 						options={options}
-						defaultSelectedLabel="all"
 					/>
 				}
 				icon="search"
