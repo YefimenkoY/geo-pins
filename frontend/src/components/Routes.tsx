@@ -7,6 +7,7 @@ import ProtectedRoute from "components/Auth/ProtectedRoute"
 import { routes } from "../constants/routes"
 import SignIn from "components/Auth/SignIn"
 import SignUp from "components/Auth/SignUp"
+import NotFound from "components/NotFound"
 import Main from "components/Main"
 import PinPage from "components/Pin/PinPage"
 import FullScreenLoader from "components/FullScreenLoader"
@@ -26,8 +27,8 @@ const Routes = (): React.ReactElement => {
 	return loading ? (
 		<FullScreenLoader />
 	) : (
-		<Switch>
-			<Layout {...{ isLoggedIn, client }}>
+		<Layout {...{ isLoggedIn, client }}>
+			<Switch>
 				<Route
 					exact
 					path={routes.LOG_IN}
@@ -56,9 +57,9 @@ const Routes = (): React.ReactElement => {
 					component={PinPage}
 					exact
 				/>
-				<Route render={() => <div>Not Found</div>} />
-			</Layout>
-		</Switch>
+				<Route component={NotFound} />
+			</Switch>
+		</Layout>
 	)
 }
 

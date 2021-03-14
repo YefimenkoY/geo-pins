@@ -1,5 +1,10 @@
 import React, { JSXElementConstructor } from "react"
-import { Route, Redirect, RouteProps } from "react-router-dom"
+import {
+	Route,
+	Redirect,
+	RouteProps,
+	RouteComponentProps,
+} from "react-router-dom"
 
 import { routes } from "../../constants/routes"
 
@@ -9,7 +14,7 @@ interface Props<P> extends RouteProps {
 	refetch?: () => void
 }
 
-const ProtectedRoute: React.FC<Props<any>> = ({
+const ProtectedRoute: React.FC<Props<RouteComponentProps<any>>> = ({
 	component: Component,
 	isLoggedIn,
 	...rest
