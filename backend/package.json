@@ -18,7 +18,7 @@
 	},
 	"dependencies": {
 		"bcryptjs": "^2.4.3",
-		"class-validator": "^0.12.2",
+		"class-validator": "^0.14.0",
 		"cors": "^2.8.4",
 		"dotenv": "^6.0.0",
 		"gql-merge": "^0.0.6",
